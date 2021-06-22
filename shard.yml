@@ -1,0 +1,17 @@
+name: mira
+version: 0.1.0
+
+authors:
+  - straw <straw@pinnoto.org>
+
+targets:
+  mira:
+    main: src/mira.cr
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+
+crystal: 1.0.0
+
+license: GPL-3.0
