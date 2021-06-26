@@ -42,7 +42,7 @@ export default {
     refreshLibrary() {
       this.loading = true
       this.axios
-          .get('/api/v1/get_library')
+          .get('/api/v1/fetch_library')
           .then((res) => {
             this.books.count = res.data.totalResults
             this.books.items = res.data.items
