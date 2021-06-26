@@ -15,8 +15,6 @@ class TokenAuthorization
             puts payload["id"]            
 
             context
-                .put_status(200)
-                .halt
         rescue
             raise Grip::Exceptions::BadRequest.new
         end
