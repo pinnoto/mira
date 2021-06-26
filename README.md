@@ -11,9 +11,9 @@ TODO: Write installation instructions here
 TODO: Write usage instructions here
 
 ## Endpoints
-All endpoints are in the scope of `/api/v1/` (meaning you should add that in front of your requests)
+All endpoints with the exception of `/login` and `/register` require an Authorization token, and are within the `/api/v1/auth/` scope, whereas the aforementioned 2 are in the `/api/v1/` scope (meaning you should add that in front of your requests)
 
-### `/ scan_library`
+### `/scan_library`
 Scans the given library directory for EPUB files, in case a new file has been added or there's been a change.
 
 Type: `GET`
@@ -21,7 +21,7 @@ Type: `GET`
 Should return:
 `Status Code 200`
 
-### `/ fetch_library`
+### `/fetch_library`
 Fetches the library files and metadata about them.
 
 Type: `GET`
@@ -39,16 +39,28 @@ JSON Response should contain:
     - `cover`: String, directory within the EPUB of the book's cover image
     - `directory`: String, directory of the EPUB file
 
-### `/ user_info`
+### `/user_info`
 [WIP]
 
-### `/ register`
+### `/register`
 Registers a user through the API
 
 Type: `POST`
 
 Should return: `Status Code 200`
 
+JSON Response should contain:
+- `token`: String, a JWT token signed by the server
+
+### `/login`
+Receives JWT for authentication
+
+Type: `POST`
+
+Should return: `Status Code 200`
+
+JSON Response should contain:
+- `token`: String, a JWT token signed by the server
 
 ## Contributing
 
@@ -62,3 +74,4 @@ Should return: `Status Code 200`
 
 - [Troplo](https://github.com/Troplo) - creator and maintainer
 - [straw](https://github.com/acoolstraw) - creator and maintainer
+- [Giorgi Kavrelishvili](https://github.com/grkek) - creator of Grip Framework, helped immensely with this project, and is a very kind person
