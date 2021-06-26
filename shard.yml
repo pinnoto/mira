@@ -3,14 +3,17 @@ version: 0.1.0
 
 authors:
   - straw <straw@pinnoto.org>
+  - Troplo <troplo@troplo.com>
 
 targets:
   mira:
     main: src/mira.cr
 
 dependencies:
-  kemal:
-    github: kemalcr/kemal
+  grip:
+    github: grip-framework/grip
+  jwt:
+    github: crystal-community/jwt
 
 crystal: 1.0.0
 
