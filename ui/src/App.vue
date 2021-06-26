@@ -20,7 +20,6 @@ export default {
   name: 'app',
   mounted() {
     this.$store.commit('updateToken', localStorage.getItem("token"))
-    this.$nextTick(() => {
       Object.assign(this.axios.defaults, {headers: {Authorization: this.$store.state.user.token}})
       this.axios.get('/api/v1/auth/user_info')
           .then(res => {
@@ -28,32 +27,9 @@ export default {
           }).catch(err => {
         this.$store.commit('throwError', err)
       })
-    })
   }
 }
 </script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-.errorText {
-  color: red;
-}
+@import './assets/style.css';
 </style>
