@@ -34,17 +34,20 @@ export default {
       this.axios
           .post('/api/v1/register', {
             username: this.register.username,
-            password: this.register.password,
-            confirmPassword: this.register.confirmPassword
+            password: this.register.password
           })
           .then((res) => {
             this.register.loading = false
-            this.$store.commit('login', res.data)
-            if(!this.register.tempLogin) {
-              localStorage.setItem('token', res.data.token);
+            if(res.data.token) {
+              this.$store.commit('login', res.data)
+              if (!this.register.tempLogin) {
+                localStorage.setItem('token', res.data.token);
+              }
+              Object.assign(this.axios.defaults, {headers: {Authorization: this.$store.state.user.token}})
+              this.$router.push('/')
+            } else {
+              this.$store.commit('throwError', "Token wasn't in the response body.")
             }
-            Object.assign(this.axios.defaults, {headers: {Authorization: this.$store.state.user.token}})
-            this.$router.push('/')
           })
           .catch((e) => {
             this.register.loading = false
