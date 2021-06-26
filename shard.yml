@@ -14,6 +14,12 @@ dependencies:
     github: grip-framework/grip
   jwt:
     github: crystal-community/jwt
+  granite:
+    github: amberframework/granite
+  sqlite3:
+    github: crystal-lang/crystal-sqlite3
+  crystal-argon2:
+    github: Axentro/crystal-argon2
 
 crystal: 1.0.0
 
