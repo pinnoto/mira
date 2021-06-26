@@ -2,7 +2,8 @@
   <div id="app">
     <div id="header">
       <button @click="$router.push('/')">Home</button>&nbsp;
-      <button @click="$router.push('/login')">Login</button>
+      <button @click="$router.push('/login')">Login</button>&nbsp;
+      <button @click="$router.push('/register')">Register</button>
     </div>
     <p class="errorText" v-if="$store.state.error.enabled">Error: {{$store.state.error.message}}</p>
     <router-view/>

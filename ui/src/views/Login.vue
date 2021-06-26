@@ -3,7 +3,7 @@
     <p>Username&nbsp;<input v-model="login.username"></p>
     <p>Password&nbsp;<input v-model="login.password"></p>
     <p>Temporary Login (will logout on refresh)<input type="checkbox" v-model="login.tempLogin"></p>
-    <button @click="doLogin">Login</button>
+    <button @click="doLogin">Login</button>&nbsp;<button @click="$router.push('/register')">Don't have an account?</button>
   </div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
         username: '',
         password: '',
         tempLogin: false,
+        // Loading would be the button/page loading
         loading: false
       }
     }
@@ -30,6 +31,7 @@ export default {
             password: this.login.password
           })
           .then((res) => {
+            this.login.loading = false
             this.$store.commit('login', res.data)
             if(!this.login.tempLogin) {
               localStorage.setItem('token', res.data.token);
@@ -38,6 +40,7 @@ export default {
             this.$router.push('/')
           })
           .catch((e) => {
+            this.login.loading = false
             this.$store.commit('throwError', e)
           })
     }
