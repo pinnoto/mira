@@ -10,7 +10,13 @@ class TokenAuthorization
                 .split("Bearer ")
                 .last
 
+            payload, header = JWT.decode(token, "hhh", JWT::Algorithm::HS256)
+
+            puts payload["id"]            
+
             context
+                .put_status(200)
+                .halt
         rescue
             raise Grip::Exceptions::BadRequest.new
         end
