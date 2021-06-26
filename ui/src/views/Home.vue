@@ -1,9 +1,8 @@
 <template>
-  <div class="home">
+  <div id="home" v-if="$store.state.authEnabled && $store.state.user.username || !$store.state.authEnabled">
     <h1>Books ({{books.count}})</h1>
     <button @click="syncLibrary()">Scan Library</button>&nbsp;<button @click="refreshLibrary()">Refresh Library</button>
     <br>
-    <p class="errorText" v-if="error.enabled">{{error.message}}</p>
     <h2 v-if="loading">Loading...</h2>
     <div v-if="!loading">
       <div v-for='(book) in books.items' :key='"book-" + book.id'>
@@ -18,6 +17,12 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <p>(There is a better way of doing this, perhaps using a component, since there's only 1 auth required route, this is fine I guess)</p>
+    <h1>You need to be authenticated to access this route</h1>
+    <button @click="$router.push('/login')">Login</button>&nbsp;
+    <button @click="$store.commit('setAuth', false)">Disable authentication in state</button>
+  </div>
 </template>
 
 <script>
@@ -30,16 +35,11 @@ export default {
       books: {
         count: 0,
         items: []
-      },
-      error: {
-        enabled: false,
-        message: ''
       }
     }
   },
   methods: {
     refreshLibrary() {
-      this.error.enabled = false
       this.loading = true
       this.axios
           .get('/api/v1/get_library')
@@ -49,13 +49,11 @@ export default {
             this.loading = false
           })
           .catch((e) => {
-            this.error.enabled = true
-            this.error.message = e
+            this.$store.commit('throwError', e)
             this.loading = false
           })
     },
     syncLibrary() {
-      this.error.enabled = false
       this.loading = true
       this.axios
           .get('/api/v1/scan_library')
@@ -63,8 +61,7 @@ export default {
             this.refreshLibrary()
           })
           .catch((e) => {
-            this.error.enabled = true
-            this.error.message = e
+            this.$store.commit('throwError', e)
             this.refreshLibrary()
           })
     }
@@ -74,9 +71,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.errorText {
-  color: red;
-}
-</style>
