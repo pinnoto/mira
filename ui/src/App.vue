@@ -5,7 +5,7 @@
       <button @click="$router.push('/login')">Login</button>&nbsp;
       <button @click="$router.push('/register')">Register</button>
     </div>
-    <p class="errorText" v-if="$store.state.error.enabled">Error: {{$store.state.error.message}}</p>
+    <p class="errorText" v-if="$store.state.error.enabled">{{$store.state.error.message}}</p>
     <router-view/>
   </div>
 </template>
