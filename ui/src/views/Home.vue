@@ -19,7 +19,7 @@
   </div>
   <div v-else>
     <p>(There is a better way of doing this, perhaps using a component, since there's only 1 auth required route, this is fine I guess)</p>
-    <h1>You need to be authenticated to access this route</h1>
+    <h1>You need to be authenticated to access this route.</h1>
     <button @click="$router.push('/login')">Login</button>&nbsp;
     <button @click="$store.commit('setAuth', false)">Disable authentication in state</button>
   </div>
@@ -42,7 +42,7 @@ export default {
     refreshLibrary() {
       this.loading = true
       this.axios
-          .get('/api/v1/fetch_library')
+          .get('/api/v1/auth/fetch_library')
           .then((res) => {
             this.books.count = res.data.totalResults
             this.books.items = res.data.items
@@ -56,7 +56,7 @@ export default {
     syncLibrary() {
       this.loading = true
       this.axios
-          .get('/api/v1/scan_library')
+          .get('/api/v1/auth/scan_library')
           .then(() => {
             this.refreshLibrary()
           })

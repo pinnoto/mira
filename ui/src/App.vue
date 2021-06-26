@@ -1,9 +1,15 @@
 <template>
   <div id="app">
     <div id="header">
-      <button @click="$router.push('/')">Home</button>&nbsp;
-      <button @click="$router.push('/login')">Login</button>&nbsp;
-      <button @click="$router.push('/register')">Register</button>
+      <div v-if="$store.state.user.username">
+        <button @click="$router.push('/')">Home</button><br>
+        <p>Hello, {{$store.state.user.username}}, you have {{$store.state.user.bookmarks.count}} bookmarks.</p>`
+      </div>
+      <div v-else>
+        <button @click="$router.push('/')">Home</button>&nbsp;
+        <button @click="$router.push('/login')">Login</button>&nbsp;
+        <button @click="$router.push('/register')">Register</button>
+      </div>
     </div>
     <p class="errorText" v-if="$store.state.error.enabled">{{$store.state.error.message}}</p>
     <router-view/>
@@ -13,12 +19,15 @@
 export default {
   name: 'app',
   mounted() {
-    Object.assign(this.axios.defaults, {headers: {Authorization: this.$store.state.user.token}})
-    this.axios.get('/api/v1/user_info')
-        .then(res => {
-          this.$store.commit('login', res.data)
-        }).catch(err => {
-      this.$store.commit('throwError', err)
+    this.$store.commit('updateToken', localStorage.getItem("token"))
+    this.$nextTick(() => {
+      Object.assign(this.axios.defaults, {headers: {Authorization: this.$store.state.user.token}})
+      this.axios.get('/api/v1/auth/user_info')
+          .then(res => {
+            this.$store.commit('login', res.data)
+          }).catch(err => {
+        this.$store.commit('throwError', err)
+      })
     })
   }
 }

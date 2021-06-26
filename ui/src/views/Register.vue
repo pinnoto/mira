@@ -51,7 +51,11 @@ export default {
           })
           .catch((e) => {
             this.register.loading = false
-            this.$store.commit('throwError', e)
+            if (!e.body.error) {
+              this.$store.commit('throwError', e)
+            } else {
+              this.$store.commit('throwError', e.body.error)
+            }
           })
     }
   }
