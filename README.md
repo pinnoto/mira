@@ -11,7 +11,7 @@ TODO: Write installation instructions here
 TODO: Write usage instructions here
 
 ## Endpoints
-All endpoints are in the scope of `/api/v1/` (meaning you should add that in front of your requests)
+All endpoints with the exception of `/login` and `/register` require an Authorization token, and are within the `/api/v1/auth/` scope, whereas the aforementioned 2 are in the `/api/v1/` scope (meaning you should add that in front of your requests)
 
 ### `/scan_library`
 Scans the given library directory for EPUB files, in case a new file has been added or there's been a change.
