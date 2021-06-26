@@ -74,3 +74,4 @@ JSON Response should contain:
 
 - [Troplo](https://github.com/Troplo) - creator and maintainer
 - [straw](https://github.com/acoolstraw) - creator and maintainer
+- [Giorgi Kavrelishvili](https://github.com/grkek) - creator of Grip Framework, helped immensely with this project, and is a very kind person
