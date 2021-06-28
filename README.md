@@ -3,8 +3,12 @@
 Beautiful and complete EPUB server and reader written in Crystal and Vue
 
 ## Installation
-
-TODO: Write installation instructions here
+1. Clone the repositry
+2. Run `install.sh`
+3. Binary is located at `/usr/bin/mira`
+4. Config is located at `/etc/mira/config.yml`, take a look at it and configure to your liking
+5. Set an environment variable `MIRA_LIBRARY_DIR`, stating where all your books are
+6. Set up NGINX to serve the static files and reverse proxy the service and optionally create a systemd service file
 
 ## Usage
 
@@ -28,8 +32,6 @@ Type: `GET`
 
 Should return: `Status Code 200`
 
-JSON Response should contain:
-
 - `totalResults`: Int, counts total items in the library.
 - `items`: Array, contains all EPUB entry metadata
     - `id`: Int, an incremental identifier of the book
@@ -38,6 +40,8 @@ JSON Response should contain:
     - `date`: String, a timestamp of when the book was released. (to be deprecated)
     - `cover`: String, directory within the EPUB of the book's cover image
     - `directory`: String, directory of the EPUB file
+    
+    - `failedParse`: String, in some cases parsing an EPUB may fail, which is when this item is created listing the name of the faulty file in question 
 
 ### `/user_info`
 [WIP]
@@ -59,7 +63,6 @@ Type: `POST`
 
 Should return: `Status Code 200`
 
-JSON Response should contain:
 - `token`: String, a JWT token signed by the server
 
 ## Contributing
