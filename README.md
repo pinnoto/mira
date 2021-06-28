@@ -3,13 +3,12 @@
 Beautiful and complete EPUB server and reader written in Crystal and Vue
 
 ## Installation
-Run the install script
-
-Binary is located at `/usr/bin/mira`
-
-Config is located at `/etc/mira/config.yml`
-
-Set an environment variable `MIRA_LIBRARY_DIR`, stating where all your books are
+1. Clone the repositry
+2. Run `install.sh`
+3. Binary is located at `/usr/bin/mira`
+4. Config is located at `/etc/mira/config.yml`, take a look at it and configure to your liking
+5. Set an environment variable `MIRA_LIBRARY_DIR`, stating where all your books are
+6. Set up NGINX to serve the static files and reverse proxy the service and optionally create a systemd service file
 
 ## Usage
 
