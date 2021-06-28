@@ -21,36 +21,55 @@ class LibraryController < Grip::Controllers::Http
           json.array do
             library_files.each do |item|
               doc_title = nil
-              doc_date = nil
               doc_author = nil
+              doc_date = nil
               doc_cover = nil
               doc_dir = nil
 
-              Compress::Zip::File.open("#{LIBRARY_DIR}/#{item}") do |zip|
-                entry = zip["META-INF/container.xml" || "container.xml"]
-                container_xml_location = nil
-                entry.open do |io|
-                  doc = XML.parse(io)
-                  container_xml_location = doc.xpath_string("string(//root:container/root:rootfiles/root:rootfile[@media-type='application/oebps-package+xml']/@full-path)", {"root" => "urn:oasis:names:tc:opendocument:xmlns:container"}).to_s
-                end
-                entry = zip["#{container_xml_location}"]
-                entry.open do |io|
-                  doc = XML.parse(io)
-                  doc_title = doc.xpath("//root:package/root:metadata/*[name()='dc:title']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
-                  doc_date = doc.xpath("//root:package/root:metadata/*[name()='dc:date']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
-                  doc_author = doc.xpath("//root:package/root:metadata/*[name()='dc:creator']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
-                  doc_cover = doc.xpath_string("string(//root:package/root:metadata/root:meta[@name='cover']/@content)", {"root" => "http://www.idpf.org/2007/opf"}).to_s
-                  doc_dir = "#{LIBRARY_DIR}/#{item}"
-                end
-              end
+              if "#{item}".includes? ".epub"
+                begin
+                  Compress::Zip::File.open("#{LIBRARY_DIR}/#{item}") do |zip|
+                    entry = zip["META-INF/container.xml" || "container.xml"]
+                    container_xml_location = nil
+                    entry.open do |io|
+                      doc = XML.parse(io)
+                      container_xml_location = doc.xpath_string("string(//root:container/root:rootfiles/root:rootfile[@media-type='application/oebps-package+xml']/@full-path)", {"root" => "urn:oasis:names:tc:opendocument:xmlns:container"}).to_s
+                    end
+                    entry = zip["#{container_xml_location}"]
+                    entry.open do |io|
+                      doc = XML.parse(io)
+                      doc_title = doc.xpath("//root:package/root:metadata/*[name()='dc:title']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
+                      doc_author = doc.xpath("//root:package/root:metadata/*[name()='dc:creator']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_a
+                      doc_date = doc.xpath("//root:package/root:metadata/*[name()='dc:date']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
+                      doc_cover = doc.xpath_string("string(//root:package/root:metadata/root:meta[@name='cover']/@content)", {"root" => "http://www.idpf.org/2007/opf"}).to_s
+                      doc_dir = "#{LIBRARY_DIR}/#{item}"
+                    end
+                  end
 
-              json.object do
-                json.field "id", id_start += 1
-                json.field "title", doc_title
-                json.field "author", doc_author
-                json.field "date", doc_date
-                json.field "cover", doc_cover
-                json.field "directory", doc_dir
+                  json.object do
+                    json.field "id", id_start += 1
+                    json.field "title", doc_title
+                    if doc_author.size >= 1
+                      json.array "authors" do
+                        doc_authors.each do |an_author|
+                          json.field "author", an_author
+                        end
+                      end
+                    else
+                      json.field "author", doc_author
+                    end
+                    json.field "date", doc_date
+                    json.field "cover", doc_cover
+                    json.field "directory", doc_dir
+                  end
+                rescue
+                  json.object do
+                    json.field "failedParse", "#{item}"
+                  end
+                  next
+                end
+              else
+                next
               end
             end
           end
@@ -58,7 +77,7 @@ class LibraryController < Grip::Controllers::Http
       end
     end
 
-    File.write("/root/mira/library.json", library_json)
+    File.write(LIBRARY_JSON_DIR, library_json)
 
     context
       .put_status(200)

@@ -37,8 +37,7 @@ class AuthController < Grip::Controllers::Http
             hashed_password = db_user.password
             Argon2::Password.verify_password(params["password"].to_s, hashed_password)
 
-            payload = {"id" => "#{db_user.id}"}
-            token = JWT.encode(payload, "hhh", JWT::Algorithm::HS256)
+            token = JWT.encode({"id" => "#{db_user.id}", "exp" => (Time.utc + 1.week).to_unix, "iat"  => Time.utc.to_unix}, ENV["MIRA_SECRET_KEY"], JWT::Algorithm::HS512)
 
             context
                 .put_status(200)

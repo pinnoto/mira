@@ -10,13 +10,14 @@ class TokenAuthorization
                 .split("Bearer ")
                 .last
 
-            payload, header = JWT.decode(token, "hhh", JWT::Algorithm::HS256)
-
-            puts payload["id"]            
+            payload, header = JWT.decode(token, ENV["MIRA_SECRET_KEY"], JWT::Algorithm::HS512)
 
             context
         rescue
-            raise Grip::Exceptions::BadRequest.new
+            context
+                .put_status(400)
+                .json({"error" => "Authentication error"})
+                .halt
         end
     end
 end
