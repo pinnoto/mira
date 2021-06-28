@@ -28,8 +28,6 @@ Type: `GET`
 
 Should return: `Status Code 200`
 
-JSON Response should contain:
-
 - `totalResults`: Int, counts total items in the library.
 - `items`: Array, contains all EPUB entry metadata
     - `id`: Int, an incremental identifier of the book
@@ -59,7 +57,6 @@ Type: `POST`
 
 Should return: `Status Code 200`
 
-JSON Response should contain:
 - `token`: String, a JWT token signed by the server
 
 ## Contributing
