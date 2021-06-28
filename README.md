@@ -3,8 +3,11 @@
 Beautiful and complete EPUB server and reader written in Crystal and Vue
 
 ## Installation
+Run the install script
+Binary is located at `/usr/bin/mira`
+Config is located at `/etc/mira/config.yml`
 
-TODO
+Set an environment variable `MIRA_LIBRARY_DIR`, listing where all your books are
 
 ## Usage
 
@@ -36,6 +39,8 @@ Should return: `Status Code 200`
     - `date`: String, a timestamp of when the book was released. (to be deprecated)
     - `cover`: String, directory within the EPUB of the book's cover image
     - `directory`: String, directory of the EPUB file
+    
+    - `failedParse`: String, in some cases parsing an EPUB may fail, which is when this item is created listing the name of the faulty file in question 
 
 ### `/user_info`
 [WIP]
