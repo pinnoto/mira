@@ -4,7 +4,7 @@ Beautiful and complete EPUB server and reader written in Crystal and Vue
 
 ## Installation
 
-TODO: Write installation instructions here
+TODO
 
 ## Usage
 
