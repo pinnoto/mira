@@ -7,21 +7,21 @@ require "jwt"
 require "json"
 require "xml"
 require "yaml"
+require "uuid"
 require "./dist/*"
 require "./db.cr"
-
-LIBRARY_DIR = "/root/library"
-CONFIG_DIR = "/root/mira/config.yml"
-LIBRARY_JSON_DIR = "/root/mira/library.json"
-API_URL = "/api/v1"
 
 class YamlConfig
   include YAML::Serializable
   property port : UInt16
-  property secret_key : String
+  property library_dir : String
 end
 
-yaml_config = YamlConfig.from_yaml(File.read(CONFIG_DIR))
+ENV["MIRA_SECRET_KEY"] ||= Random::Secure.urlsafe_base64(64)
+CONFIG_DIR = "/etc/mira/config.yml"
+LIBRARY_DIR = YamlConfig.from_yaml(File.read(CONFIG_DIR)).library_dir
+LIBRARY_JSON_DIR = "/etc/mira/library.json"
+API_URL = "/api/v1"
 
 class Application < Grip::Application
 
@@ -38,7 +38,7 @@ class Application < Grip::Application
 
           get "/fetch_library", LibraryController, as: fetch_library
           get "/scan_library", LibraryController, as: scan_library
-          get "/user_info", UserController, as: get_user_info
+          get "/get_user_info", UserController, as: get_user_info
         end
         post "/register", AuthController, as: register
         post "/login", AuthController, as: login
