@@ -4,33 +4,39 @@
       <div class="header-meta">
         <h1>{{$store.state.user.username}}'s Library</h1>
         <h2>You have {{books.count}} books in your library.</h2>
-        <button @click="syncLibrary()">Scan Library</button>&nbsp;<button @click="refreshLibrary()">Refresh Library</button>
       </div>
-      <div class="header-icons">
+      <div class="header-icons" v-if="$store.state.user.username">
         <span style="cursor: pointer" @click="$router.push('/test')" class="material-icons-outlined">turned_in_not</span>
         <span style="cursor: pointer" @click="$router.push('/test')" class="material-icons-outlined">style</span>
         <span style="cursor: pointer" @click="$router.push('/test')" class="material-icons-outlined">library_books</span>
-        <span style="cursor: pointer" @click="$router.push('/test')" class="material-icons-outlined">manage_accounts</span>
+        <span style="cursor: pointer" @click="syncLibrary()" class="material-icons-outlined">sync</span>
       </div>
     </div>
-    <div class="main-container">
-      <div class="card" v-for='(book) in books.items' :key='"book-" + book.id'>
+    <div class="main-container" v-if="!loading">
+      <div class="card" v-for='(book) in onlyParsed' :key='"book-" + book.id'>
         <div class="cover-img"><img :src="book.cover"></div>
         <div class="card-text">
-          <h1>{{book.title}}</h1>
+          <h1>{{ book.title && 38 > book.title.length ? book.title : book.title.substring(0,38)+"..."  }}</h1>
           <h2>{{book.author}}</h2>
-          <h3>{{book.date | moment}}</h3>
+          <h3>{{book.date | moment()}}</h3>
         </div>
       </div>
-      <div v-if="!books.items">
+    </div>
+    <div class="main-container" v-if="loading">
+      <div v-if="loading">
         <div class="card-text">
-          <h1>You have no books</h1>
+          <h1>Loading...</h1>
+          <h2>Please wait.</h2>
+        </div>
+      </div>
+      <div v-if="!books.items.length && !loading">
+        <div class="card-text">
+          <h1>You have no books.</h1>
           <h2>Might as well add some?</h2>
         </div>
       </div>
     </div>
     <br>
-    <h2 v-if="loading">Loading...</h2>
   </div>
   <div v-else>
     <div class="main-container">
@@ -56,9 +62,16 @@ export default {
       }
     }
   },
+  computed: {
+    onlyParsed: function() {
+      return this.books.items.filter(function(u) {
+        return !u.failedParse
+      })
+    }
+  },
   filters: {
     moment: function (date) {
-      return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+      return moment(date).format('YYYY');
     }
   },
   methods: {
