@@ -2,13 +2,19 @@
 
 Beautiful and complete EPUB server and reader written in Crystal and Vue
 
-## Installation
+## Installation (Backend)
 1. Clone the repositry
 2. Run `install.sh`
 3. Binary is located at `/usr/bin/mira`
 4. Config is located at `/etc/mira/config.yml`, take a look at it and configure to your liking
 5. Set an environment variable `MIRA_LIBRARY_DIR`, stating where all your books are
 6. Set up NGINX to serve the static files and reverse proxy the service and optionally create a systemd service file
+
+## Installation (Frontend)
+NOTE: The frontend is not in a finished state, it's still in heavy development.
+1. Go into the `ui` folder
+2. Run `yarn install` and `yarn build`
+3. This will create a `dist` folder that contains the built static files, which you can serve using NGINX.
 
 ## Usage
 
@@ -37,14 +43,21 @@ Should return: `Status Code 200`
     - `id`: Int, an incremental identifier of the book
     - `title`: String, the title of the book according to its metadata file
     - `author`: String, the author of the book according to the dc:creator entry in the metadata file
+    - `authors`: Array, an array containing all the authors of the book according to the dc:creator entry in the metadata file (if there's more than 1 author)
     - `date`: String, a timestamp of when the book was released. (to be deprecated)
     - `cover`: String, directory within the EPUB of the book's cover image
     - `directory`: String, directory of the EPUB file
     
     - `failedParse`: String, in some cases parsing an EPUB may fail, which is when this item is created listing the name of the faulty file in question 
 
-### `/user_info`
-[WIP]
+### `/get_user_info`
+Receives username, and other user information for logged in user (via JWT).
+
+Type: `GET`
+
+Should return: `Status Code 200`
+
+- `username`: String, the username of the logged in user
 
 ### `/register`
 Registers a user through the API
