@@ -21,6 +21,7 @@ class LibraryController < Grip::Controllers::Http
           json.array do
             library_files.each do |item|
               doc_title = nil
+              doc_authors = nil
               doc_author = nil
               doc_date = nil
               doc_cover = nil
@@ -39,7 +40,7 @@ class LibraryController < Grip::Controllers::Http
                     entry.open do |io|
                       doc = XML.parse(io)
                       doc_title = doc.xpath("//root:package/root:metadata/*[name()='dc:title']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
-                      doc_author = doc.xpath("//root:package/root:metadata/*[name()='dc:creator']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_a
+                      doc_author = doc.xpath_nodes("//root:package/root:metadata/*[name()='dc:creator']/text()", {"root" => "http://www.idpf.org/2007/opf"})
                       doc_date = doc.xpath("//root:package/root:metadata/*[name()='dc:date']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
                       doc_cover = doc.xpath_string("string(//root:package/root:metadata/root:meta[@name='cover']/@content)", {"root" => "http://www.idpf.org/2007/opf"}).to_s
                       doc_dir = "#{LIBRARY_DIR}/#{item}"
@@ -49,14 +50,14 @@ class LibraryController < Grip::Controllers::Http
                   json.object do
                     json.field "id", id_start += 1
                     json.field "title", doc_title
-                    if doc_author.size >= 1
-                      json.array "authors" do
-                        doc_authors.each do |an_author|
-                          json.field "author", an_author
+                    if doc_author
+                      json.field "authors" do
+                        json.array do
+                          doc_author.each do |an_author|
+                            json.field "author", an_author.to_s
+                          end
                         end
                       end
-                    else
-                      json.field "author", doc_author
                     end
                     json.field "date", doc_date
                     json.field "cover", doc_cover
