@@ -1,2 +1,3 @@
 port: 11885
-secret_key: hhh
+library_dir: <directory of your epubs folder>
+library_json: /etc/mira/library.json

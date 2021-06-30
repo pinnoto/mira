@@ -1,0 +1,5 @@
+*.js linguist-language=Crystal
+*.html linguist-language=Crystal
+*.css linguist-language=Crystal
+*.scss linguist-language=Crystal
+ 

@@ -17,10 +17,11 @@ class YamlConfig
   property library_dir : String
 end
 
-ENV["MIRA_SECRET_KEY"] ||= Random::Secure.urlsafe_base64(64)
+# ENV["MIRA_SECRET_KEY"] ||= Random::Secure.urlsafe_base64(64)
+SECRET_KEY = "hhh"
 CONFIG_DIR = "/etc/mira/config.yml"
 LIBRARY_DIR = YamlConfig.from_yaml(File.read(CONFIG_DIR)).library_dir
-LIBRARY_JSON_DIR = "/etc/mira/library.json"
+LIBRARY_JSON_DIR = YamlConfig.from_yaml(File.read(CONFIG_DIR)).library_json
 API_URL = "/api/v1"
 
 class Application < Grip::Application
@@ -33,17 +34,17 @@ class Application < Grip::Application
 
     scope "/api" do
       scope "/v1" do
-        scope "/auth" do
-          pipe_through :jwt_auth
+        pipe_through :jwt_auth
 
-          get "/fetch_library", LibraryController, as: fetch_library
-          get "/scan_library", LibraryController, as: scan_library
-          get "/get_user_info", UserController, as: get_user_info
-        end
-        post "/register", AuthController, as: register
-        post "/login", AuthController, as: login
+        get "/fetch_library", LibraryController, as: fetch_library
+        get "/scan_library", LibraryController, as: scan_library
+        get "/get_user_info", UserController, as: get_user_info
       end
     end
+    
+    post "/api/v1/register", AuthController, as: register
+    post "/api/v1/login", AuthController, as: login
+  
   end
 
   def port
