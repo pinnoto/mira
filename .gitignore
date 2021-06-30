@@ -1,4 +1,5 @@
-
+lib
+db.sqlite3
 .idea/vcs.xml
 .idea/modules.xml
 .idea/mira.iml

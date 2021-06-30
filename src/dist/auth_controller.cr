@@ -21,8 +21,11 @@ class AuthController < Grip::Controllers::Http
             user.password = hasher.create(params["password"].to_s)
             user.save
 
+            token = JWT.encode({"id" => "#{user.id}", "exp" => (Time.utc + 1.week).to_unix, "iat"  => Time.utc.to_unix}, ENV["MIRA_SECRET_KEY"], JWT::Algorithm::HS512)
+
             context
                 .put_status(200)
+                .json({"token": token})
                 .halt
         end
     end

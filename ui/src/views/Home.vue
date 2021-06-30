@@ -13,12 +13,11 @@
       </div>
     </div>
     <div class="main-container" v-if="!loading">
-      <div class="card" @click="$router.push('/view/' + book.id)" v-for='(book) in onlyParsed' :key='"book-" + book.id'>
+      <div class="card" v-for='(book) in onlyParsed' :key='"book-" + book.id'>
         <div class="cover-img"><img :src="book.cover"></div>
         <div class="card-text">
           <h1>{{ book.title && 38 > book.title.length ? book.title : book.title.substring(0,38)+"..."  }}</h1>
-          <h2 v-if="book.author">{{book.author}}</h2>
-          <h2 v-if="book.authors">{{book.authors.join(', ')}}</h2>
+          <h2>{{book.author}}</h2>
           <h3>{{book.date | moment()}}</h3>
         </div>
       </div>
@@ -41,7 +40,6 @@
   </div>
   <div v-else>
     <div class="main-container">
-      <p>(There is a better way of doing this, perhaps using a component, since there's only 1 auth required route, this is fine I guess)</p>
       <h1>You need to be authenticated to access this route.</h1><br>
       <button @click="$router.push('/login')">Login</button>&nbsp;
       <button @click="$store.commit('setAuth', false)">Disable authentication in state</button>
@@ -86,11 +84,7 @@ export default {
             this.loading = false
           })
           .catch((e) => {
-            if(!e.data.error) {
-              this.$store.commit('throwError', e)
-            } else {
-              this.$store.commit('throwError', e.data.error)
-            }
+            this.$store.commit('throwError', e)
             this.loading = false
           })
     },
@@ -102,19 +96,24 @@ export default {
             this.refreshLibrary()
           })
           .catch((e) => {
-            if(!e.data.error) {
-              this.$store.commit('throwError', e)
-            } else {
-              this.$store.commit('throwError', e.data.error)
-            }
+            this.$store.commit('throwError', e)
             this.refreshLibrary()
           })
+    },
+    checkLogin() {
+            this.axios
+          .get('/api/v1/auth/get_user_info')
+          .catch((e) => {
+            this.$store.commit('throwError', e)
+            this.$router.push('/login')
+            })
     }
   },
   mounted() {
     this.$store.commit('updateToken', localStorage.getItem("token"))
     Object.assign(this.axios.defaults, {headers: {Authorization: this.$store.state.user.token}})
     this.refreshLibrary()
+    this.checkLogin()
   }
 }
 </script>

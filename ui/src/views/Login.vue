@@ -1,9 +1,11 @@
 <template>
-  <div class="login">
+  <div id="login" class="main-container">
+      <div class="card-text">
     <p>Username&nbsp;<input v-model="login.username"></p>
     <p>Password&nbsp;<input v-model="login.password"></p>
-    <p>Temporary Login (will logout on refresh)<input type="checkbox" v-model="login.tempLogin"></p>
+    <p data-tooltip="Logout on refresh"><input type="checkbox" v-model="login.tempLogin">Temporary Login</p>
     <button @click="doLogin">Login</button>&nbsp;<button @click="$router.push('/register')">Don't have an account?</button>
+      </div>
   </div>
 </template>
 
@@ -37,6 +39,12 @@ export default {
               localStorage.setItem('token', res.data.token);
             }
             Object.assign(this.axios.defaults, {headers: {Authorization: this.$store.state.user.token}})
+            this.axios.get('/api/v1/auth/get_user_info')
+                .then(res => {
+                  this.$store.commit('login', res.data)
+                }).catch(err => {
+              this.$store.commit('throwError', err)
+            })
             this.$router.push('/')
           })
           .catch((e) => {
