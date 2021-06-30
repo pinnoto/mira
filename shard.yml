@@ -7,7 +7,7 @@ authors:
 
 targets:
   mira:
-    main: src/mira.cr
+    main: src/main.cr
 
 dependencies:
   grip:
