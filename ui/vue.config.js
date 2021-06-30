@@ -1,5 +1,6 @@
 module.exports = {
     devServer: {
-        proxy: 'http://152.228.219.138:11885',
+        proxy: 'https://mira.troplo.arpa',
+        publicPath: 'https://mira.troplo.arpa',
     },
 }

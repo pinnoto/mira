@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #161616;
+  --sec-bg: #2e2e2e;
+  --prim-color: #f8f8f8;
+  --sec-color: #dfdfdf;
+  --tert-color: #bbbbbb;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--sec-color);
+  font-family: 'Inter', sans-serif
+}
+
+.header {
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: var(--prim-color);
+}
+
+.header h2 {
+  margin-top: -16px;
+  font-size: 18px;
+  color: var(--tert-color);
+}
+
+.header-meta {
+  align-items: center;
+  padding-left: 30px;
+  width: 90%;
+}
+
+.header-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: auto;
+  right: 0;
+  top: 0;
+  padding-right: 30px;
+}
+
+.header-icons span {
+  font-size: 36px;
+  margin-left: 18px;
+}
+
+.main-container {
+  display: flex;
+  flex-flow: wrap;
+  margin: auto;
+  width: 80%;
+  text-align: center;
+  justify-content:center;
+}
+
+.card {
+  margin: 18px;
+  margin-left: 22px;
+  margin-right: 22px;
+  background-color: var(--sec-bg);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 11px 11px 0 rgba(0, 0, 0,.16);
+    transform: translateY(-5px);
+  }
+
+}
+
+.card-text {
+  margin-top: 0;
+  min-height: 100px;
+  width: 230px;
+}
+
+.card-text h1 {
+  word-wrap: break-word;
+  color: var(--prim-color);
+  font-size: 18px;
+}
+
+.card-text h2 {
+  word-wrap: break-word;
+  color: var(--sec-color);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.card-text h3 {
+  word-wrap: break-word;
+  color: var(--tert-color);
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.cover-img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin-bottom: 0;
+  min-height: 300px;
+  width: 100%;
+  background-color: #494949;
+}
+
+.errorText {
+  color: red;
+}
