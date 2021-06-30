@@ -1,4 +1,5 @@
 # mira
+<img src="https://img.shields.io/github/license/pinnoto/mira"/> <img src="https://img.shields.io/github/last-commit/pinnoto/mira"/>
 
 Beautiful and complete EPUB server and reader written in Crystal and Vue
 
