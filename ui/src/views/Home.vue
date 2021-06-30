@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="main-container" v-if="!loading">
-      <div class="card" v-for='(book) in onlyParsed' :key='"book-" + book.id'>
+      <div class="card" @click="$router.push('/view/' + book.id)" v-for='(book) in onlyParsed' :key='"book-" + book.id'>
         <div class="cover-img"><img :src="book.cover"></div>
         <div class="card-text">
           <h1>{{ book.title && 38 > book.title.length ? book.title : book.title.substring(0,38)+"..."  }}</h1>
