@@ -21,7 +21,7 @@ end
 SECRET_KEY = "hhh"
 CONFIG_DIR = "/etc/mira/config.yml"
 LIBRARY_DIR = YamlConfig.from_yaml(File.read(CONFIG_DIR)).library_dir
-LIBRARY_JSON_DIR = "/etc/mira/library.json"
+LIBRARY_JSON_DIR = YamlConfig.from_yaml(File.read(CONFIG_DIR)).library_json
 API_URL = "/api/v1"
 
 class Application < Grip::Application
