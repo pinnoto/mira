@@ -1,6 +1,3 @@
-require "../main.cr"
-require "./db_model.cr"
-
 class UserController < Grip::Controllers::Http
 
     def get_user_info(context : Context) : Context
@@ -11,7 +8,7 @@ class UserController < Grip::Controllers::Http
           .split("Bearer ")
           .last
 
-        payload, header = JWT.decode(token, SECRET_KEY, JWT::Algorithm::HS512)
+        payload, header = JWT.decode(token, ENV["MIRA_SECRET_KEY"], JWT::Algorithm::HS512)
 
         db_user = User.find_by(id: payload["id"].to_s.to_i)
 

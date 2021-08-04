@@ -1,5 +1,3 @@
-require "../main.cr"
-
 class LibraryController < Grip::Controllers::Http
 
   def fetch_library(context : Context) : Context
@@ -46,6 +44,8 @@ class LibraryController < Grip::Controllers::Http
                       doc_dir = "#{LIBRARY_DIR}/#{item}"
                     end
                   end
+
+                  Digest::SHA256.hexdigest &.file("#{LIBRARY_DIR}/#{item}")
 
                   json.object do
                     json.field "id", id_start += 1

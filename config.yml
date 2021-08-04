@@ -1,3 +1,3 @@
 port: 11885
-library_dir: <directory of your epubs folder>
+library_dir: /home/bo/Documents/library
 library_json: /etc/mira/library.json

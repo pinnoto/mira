@@ -8,20 +8,19 @@ require "json"
 require "xml"
 require "yaml"
 require "uuid"
+require "digest"
 require "./dist/*"
-require "./db.cr"
 
 class YamlConfig
   include YAML::Serializable
   property port : UInt16
   property library_dir : String
+  property library_json : String
 end
 
-# ENV["MIRA_SECRET_KEY"] ||= Random::Secure.urlsafe_base64(64)
-SECRET_KEY = "hhh"
-CONFIG_DIR = "/etc/mira/config.yml"
-LIBRARY_DIR = YamlConfig.from_yaml(File.read(CONFIG_DIR)).library_dir
-LIBRARY_JSON_DIR = YamlConfig.from_yaml(File.read(CONFIG_DIR)).library_json
+ENV["MIRA_SECRET_KEY"] ||= Random::Secure.urlsafe_base64(64)
+LIBRARY_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG_DIR"])).library_dir.rstrip('/')
+LIBRARY_JSON_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG_DIR"])).library_json
 API_URL = "/api/v1"
 
 class Application < Grip::Application
@@ -39,6 +38,9 @@ class Application < Grip::Application
         get "/fetch_library", LibraryController, as: fetch_library
         get "/scan_library", LibraryController, as: scan_library
         get "/get_user_info", UserController, as: get_user_info
+        post "/bookmark"
+        post "/bookmark"
+        post "/bookmark"
       end
     end
     
@@ -48,7 +50,7 @@ class Application < Grip::Application
   end
 
   def port
-    YamlConfig.from_yaml(File.read(CONFIG_DIR)).port.to_i
+    YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG_DIR"])).port.to_i
   end
 
 end
