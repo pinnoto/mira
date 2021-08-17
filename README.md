@@ -4,12 +4,9 @@
 Beautiful and complete EPUB server and reader written in Crystal and Vue
 
 ## Installation (Backend)
-1. Clone the repositry
-2. Run `install.sh`
-3. Binary is located at `/usr/bin/mira`
-4. Config is located at `/etc/mira/config.yml`, take a look at it and configure to your liking
-5. Set an environment variable `MIRA_LIBRARY_DIR`, stating where all your books are
-6. Set up NGINX to serve the static files and reverse proxy the service and optionally create a systemd service file
+1. Clone the repositry and cd into it `git clone https://github.com/pinnoto/mira && cd mira`
+2. Review `install.sh` and run it
+3. Change `/etc/mira/config.yml` and adjust to your liking
 
 ## Installation (Frontend)
 NOTE: The frontend is not in a finished state, it's still in heavy development.
