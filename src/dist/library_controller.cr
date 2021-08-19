@@ -10,7 +10,7 @@ class LibraryController < Grip::Controllers::Http
 
   def scan_library(context : Context) : Context
     library_files = Dir.children("#{LIBRARY_DIR}")
-    id_start = 0
+    # id_start = 0
 
     library_json = JSON.build do |json|
       json.object do
@@ -18,6 +18,7 @@ class LibraryController < Grip::Controllers::Http
         json.field "items" do
           json.array do
             library_files.each do |item|
+              doc_hash = nil
               doc_title = nil
               doc_authors = nil
               doc_author = nil
@@ -45,10 +46,10 @@ class LibraryController < Grip::Controllers::Http
                     end
                   end
 
-                  Digest::SHA256.hexdigest &.file("#{LIBRARY_DIR}/#{item}")
+                  hash = Digest::SHA256.hexdigest &.file("#{LIBRARY_DIR}/#{item}")
 
                   json.object do
-                    json.field "id", id_start += 1
+                    json.field "hash", hash # id_start += 1
                     json.field "title", doc_title
                     if doc_author
                       json.field "authors" do
@@ -67,7 +68,6 @@ class LibraryController < Grip::Controllers::Http
                   json.object do
                     json.field "failedParse", "#{item}"
                   end
-                  next
                 end
               else
                 next

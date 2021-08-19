@@ -38,9 +38,7 @@ class Application < Grip::Application
         get "/fetch_library", LibraryController, as: fetch_library
         get "/scan_library", LibraryController, as: scan_library
         get "/get_user_info", UserController, as: get_user_info
-        post "/bookmark"
-        post "/bookmark"
-        post "/bookmark"
+        get "/files/:id", FileController, as: serve_file
       end
     end
     

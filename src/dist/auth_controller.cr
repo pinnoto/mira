@@ -4,10 +4,14 @@ class AuthController < Grip::Controllers::Http
 
         params = context.fetch_json_params
 
-        username = params["username"]?
-        password = params["password"]?
+        username = params["username"]
+        password = params["password"]
+        puts username
+        puts password
 
         if username && password
+            puts username
+            puts password
 
             db_username = User.find_by(username: username)
 

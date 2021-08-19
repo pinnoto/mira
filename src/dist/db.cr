@@ -15,6 +15,7 @@ class User < Granite::Base
     column id : Int64, primary: true
     column username : String
     column password : String
+    column created_at : Time
 end
 
 class Book < Granite::Base
