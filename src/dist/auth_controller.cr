@@ -6,12 +6,8 @@ class AuthController < Grip::Controllers::Http
 
         username = params["username"]
         password = params["password"]
-        puts username
-        puts password
 
         if username && password
-            puts username
-            puts password
 
             db_username = User.find_by(username: username)
 

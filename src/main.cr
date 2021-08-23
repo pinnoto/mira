@@ -25,12 +25,17 @@ API_URL = "/api/v1"
 
 class Application < Grip::Application
 
+  #def custom : Array(HTTP::Handler)
+  #  [
+  #    HTTP::StaticFileHandler.new(public_dir: "./files/static/", fallthrough: true, directory_listing: false),
+  #  ] of HTTP::Handler
+  #end
+
   def routes
     
     pipeline :jwt_auth, [
       TokenAuthorization.new
     ]
-
     scope "/api" do
       scope "/v1" do
         pipe_through :jwt_auth

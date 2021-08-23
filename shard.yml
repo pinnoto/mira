@@ -11,7 +11,8 @@ targets:
 
 dependencies:
   grip:
-    github: grip-framework/grip
+    github: acoolstraw/grip
+    commit: cd05c5a2406c6f0e939b3888ff9c052bc5c40536
   jwt:
     github: crystal-community/jwt
   granite:

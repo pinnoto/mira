@@ -25,8 +25,8 @@ shards:
     version: 0.23.0
 
   grip:
-    git: https://github.com/grip-framework/grip.git
-    version: 1.0.4
+    git: https://github.com/acoolstraw/grip.git
+    version: 1.0.4+git.commit.cd05c5a2406c6f0e939b3888ff9c052bc5c40536
 
   jwt:
     git: https://github.com/crystal-community/jwt.git
