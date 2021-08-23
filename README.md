@@ -1,5 +1,5 @@
 # mira
-<img src="https://img.shields.io/github/license/pinnoto/mira"/> <img src="https://img.shields.io/github/last-commit/pinnoto/mira"/>
+<img src="https://img.shields.io/github/license/pinnoto/mira"/> <img src="https://img.shields.io/github/last-commit/pinnoto/mira"/> <img src="https://img.shields.io/badge/Crystal-1.1.1-black"/>
 
 Powerful EPUB server written in Crystal
 
