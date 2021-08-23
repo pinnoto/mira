@@ -56,7 +56,7 @@ class LibraryController < Grip::Controllers::Http
                         json.field "authors" do
                           json.array do
                             doc_author.each do |an_author|
-                              json.field "author", an_author.to_s
+                              json.string an_author.to_s
                             end
                           end
                         end

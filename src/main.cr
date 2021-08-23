@@ -1,6 +1,7 @@
 require "sqlite3"
 require "db"
 require "grip"
+require "colorize"
 require "crystal-argon2"
 require "compress/zip"
 require "jwt"
@@ -13,14 +14,18 @@ require "./dist/*"
 
 class YamlConfig
   include YAML::Serializable
-  property port : UInt16
-  property library_dir : String
-  property library_json : String
+  property port : UInt32 = 11885
+  property library_dir : String = ""
+  property library_json : String = ""
+  property covers_dir : String = ""
 end
 
-ENV["MIRA_SECRET_KEY"] ||= Random::Secure.urlsafe_base64(64)
+ENV["MIRA_SECRET_KEY"] ||= "hhh" #Random::Secure.urlsafe_base64(64)
+ENV["MIRA_CONFIG_DIR"] ||= "/etc/mira/config.yml"
 LIBRARY_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG_DIR"])).library_dir.rstrip('/')
-LIBRARY_JSON_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG_DIR"])).library_json
+LIBRARY_JSON_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG_DIR"])).library_json.rstrip('/')
+COVERS_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG_DIR"])).covers_dir.rstrip('/') # .rstrip strips the last /'s, if any, so it'd end in nothing.
+puts COVERS_DIR
 API_URL = "/api/v1"
 
 class Application < Grip::Application
@@ -58,5 +63,14 @@ class Application < Grip::Application
 
 end
 
-app = Application.new
-app.run
+case ""
+when LIBRARY_DIR
+  puts "#{"ERROR ".colorize(:red)}Library directory not set in #{ENV["MIRA_CONFIG_DIR"]}"
+when LIBRARY_JSON_DIR
+  puts "#{"ERROR ".colorize(:red)}Library JSON file directory not set in #{ENV["MIRA_CONFIG_DIR"]}"
+when COVERS_DIR
+  puts "#{"ERROR ".colorize(:red)}Cover image directory not set in #{ENV["MIRA_CONFIG_DIR"]}"
+else
+  app = Application.new
+  app.run
+end
