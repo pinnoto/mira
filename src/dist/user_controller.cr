@@ -34,4 +34,21 @@ class UserController < Grip::Controllers::Http
       end
     end
 
+    def change_user_rank(context : Context) : Context
+        begin
+            token = context
+                .get_req_header("Authorization")
+                .split("Bearer ")
+                .last
+
+            payload, header = JWT.decode(token, ENV["MIRA_SECRET_KEY"], JWT::Algorithm::HS512)
+
+            context
+        rescue
+            context
+                .put_status(403)
+                .json({"error" => "403 Forbidden"})
+                .halt
+        end
+    end
 end

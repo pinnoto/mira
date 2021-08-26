@@ -13,8 +13,8 @@ class TokenAuthorization
             context
         rescue
             context
-                .put_status(400)
-                .json({"error" => "Authentication error"})
+                .put_status(403)
+                .json({"error" => "403 Forbidden"})
                 .halt
         end
     end

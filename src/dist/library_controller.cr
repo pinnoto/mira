@@ -1,6 +1,7 @@
 class LibraryController < Grip::Controllers::Http
 
   def fetch_library(context : Context) : Context
+    # To be replaced with just putting it in a database
     library_response = File.read(LIBRARY_JSON_DIR)
     context
       .put_status(200)
@@ -10,9 +11,10 @@ class LibraryController < Grip::Controllers::Http
 
   def scan_library(context : Context) : Context
     if Dir.exists?(LIBRARY_DIR) == true
+      # List contents of LIBRARY_DIR
       library_files = Dir.children("#{LIBRARY_DIR}")
-      # id_start = 0
-
+      
+      # Start building JSON to serve
       library_json = JSON.build do |json|
         json.object do
           json.field "totalResults", library_files.size
@@ -21,7 +23,6 @@ class LibraryController < Grip::Controllers::Http
               library_files.each do |item|
                 doc_hash = nil
                 doc_title = nil
-                doc_authors = nil
                 doc_author = nil
                 doc_date = nil
                 doc_cover = nil
@@ -29,8 +30,10 @@ class LibraryController < Grip::Controllers::Http
 
                 if "#{item}".includes? ".epub"
                   begin
+                    # An EPUB file is simply a ZIP archive with extra steps
                     Compress::Zip::File.open("#{LIBRARY_DIR}/#{item}") do |zip|
-                      entry = zip["META-INF/container.xml" || "container.xml"]
+                      # Find the container.xml, which has metadata about where to find everything
+                      entry = zip["META-INF/container.xml"] || zip["container.xml"]
                       container_xml_location = nil
                       entry.open do |io|
                         doc = XML.parse(io)
@@ -39,6 +42,8 @@ class LibraryController < Grip::Controllers::Http
                       entry = zip["#{container_xml_location}"]
                       entry.open do |io|
                         doc = XML.parse(io)
+                        # I have no idea how or why this code works, but it works.
+                        # I hope you do not go through the same suffering as I did.
                         doc_title = doc.xpath("//root:package/root:metadata/*[name()='dc:title']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
                         doc_author = doc.xpath_nodes("//root:package/root:metadata/*[name()='dc:creator']/text()", {"root" => "http://www.idpf.org/2007/opf"})
                         doc_date = doc.xpath("//root:package/root:metadata/*[name()='dc:date']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
@@ -47,16 +52,17 @@ class LibraryController < Grip::Controllers::Http
                       end
                     end
 
-                    hash = Digest::SHA256.hexdigest &.file("#{LIBRARY_DIR}/#{item}")
+                    # Hashes the file, which yields a kind of unique identifier regardless of metadata
+                    id = Digest::SHA256.hexdigest &.file("#{LIBRARY_DIR}/#{item}")
 
                     json.object do
-                      json.field "hash", hash # id_start += 1
+                      json.field "id", hash # id_start += 1
                       json.field "title", doc_title
                       if doc_author
                         json.field "authors" do
                           json.array do
-                            doc_author.each do |an_author|
-                              json.string an_author.to_s
+                            doc_author.each do |author|
+                              json.string author.to_s
                             end
                           end
                         end
@@ -65,6 +71,8 @@ class LibraryController < Grip::Controllers::Http
                       json.field "cover", doc_cover
                       json.field "directory", doc_dir
                     end
+                  # Fallback response for an entry in case it can't parse properly.
+                  # Happens with some EPUBs, I couldn't figure out why.
                   rescue
                     json.object do
                       json.field "failedParse", "#{item}"

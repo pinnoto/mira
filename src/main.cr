@@ -25,14 +25,15 @@ ENV["MIRA_CONFIG_DIR"] ||= "/etc/mira/config.yml"
 LIBRARY_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG_DIR"])).library_dir.rstrip('/')
 LIBRARY_JSON_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG_DIR"])).library_json.rstrip('/')
 COVERS_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG_DIR"])).covers_dir.rstrip('/') # .rstrip strips the last /'s, if any, so it'd end in nothing.
-puts COVERS_DIR
 API_URL = "/api/v1"
 
 class Application < Grip::Application
 
-  #def custom : Array(HTTP::Handler)
+  # Static file handler
+  # Will possibly be implemented
+  #def serve_files : Array(HTTP::Handler)
   #  [
-  #    HTTP::StaticFileHandler.new(public_dir: "./files/static/", fallthrough: true, directory_listing: false),
+  #    HTTP::StaticFileHandler.new(public_dir: "./static", fallthrough: true, directory_listing: false),
   #  ] of HTTP::Handler
   #end
 
@@ -48,13 +49,11 @@ class Application < Grip::Application
         get "/fetch_library", LibraryController, as: fetch_library
         get "/scan_library", LibraryController, as: scan_library
         get "/get_user_info", UserController, as: get_user_info
-        get "/files/:id", FileController, as: serve_file
       end
     end
-    
+    get "/api/v1/files/:id", FileController, as: serve_file
     post "/api/v1/register", AuthController, as: register
     post "/api/v1/login", AuthController, as: login
-  
   end
 
   def port
@@ -65,12 +64,21 @@ end
 
 case ""
 when LIBRARY_DIR
-  puts "#{"ERROR ".colorize(:red)}Library directory not set in #{ENV["MIRA_CONFIG_DIR"]}"
+  puts "#{"ERROR ".colorize(:red)}Library directory not set in #{ENV["MIRA_CONFIG_DIR"].to_s.colorize(:yellow)}."
 when LIBRARY_JSON_DIR
-  puts "#{"ERROR ".colorize(:red)}Library JSON file directory not set in #{ENV["MIRA_CONFIG_DIR"]}"
+  puts "#{"ERROR ".colorize(:red)}Library JSON file directory not set in #{ENV["MIRA_CONFIG_DIR"].to_s.colorize(:yellow)}."
 when COVERS_DIR
-  puts "#{"ERROR ".colorize(:red)}Cover image directory not set in #{ENV["MIRA_CONFIG_DIR"]}"
+  puts "#{"ERROR ".colorize(:red)}Cover image directory not set in #{ENV["MIRA_CONFIG_DIR"].to_s.colorize(:yellow)}."
 else
-  app = Application.new
-  app.run
+  #case
+  #when Dir.exists?(LIBRARY_DIR) == false
+  #  puts "#{"ERROR ".colorize(:red)}Directory #{LIBRARY_DIR.to_s.colorize(:yellow)} does not exist."
+  #when Dir.exists?(COVERS_DIR) == false
+  #  puts "#{"ERROR ".colorize(:red)}Directory #{LIBRARY_DIR.to_s.colorize(:yellow)} does not exist."
+  #when Dir.exists?(LIBRARY_JSON_DIR) == false
+  #  puts "#{"ERROR ".colorize(:red)}Directory #{LIBRARY_DIR.to_s.colorize(:yellow)} does not exist."
+  #else 
+    app = Application.new
+    app.run
+  #end
 end

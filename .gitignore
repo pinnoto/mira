@@ -1,5 +1,5 @@
 lib
-db.sqlite3
+mira.db
 .idea/vcs.xml
 .idea/modules.xml
 .idea/mira.iml
