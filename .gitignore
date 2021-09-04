@@ -6,5 +6,6 @@ mira.db
 .idea/inspectionProfiles/Project_Default.xml
 .idea/codestream.xml
 .idea/.gitignore
-main
-main.o
+shard.lock
+mira
+mira.o

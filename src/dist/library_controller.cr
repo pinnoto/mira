@@ -27,6 +27,7 @@ class LibraryController < Grip::Controllers::Http
                 doc_date = nil
                 doc_cover = nil
                 doc_dir = nil
+                doc_container = nil
 
                 if "#{item}".includes? ".epub"
                   begin
@@ -42,21 +43,21 @@ class LibraryController < Grip::Controllers::Http
                       entry = zip["#{container_xml_location}"]
                       entry.open do |io|
                         doc = XML.parse(io)
-                        # I have no idea how or why this code works, but it works.
-                        # I hope you do not go through the same suffering as I did.
+                        # Consider replacing this with an XPath replacement shard, this is incredibly frustrating.
                         doc_title = doc.xpath("//root:package/root:metadata/*[name()='dc:title']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
                         doc_author = doc.xpath_nodes("//root:package/root:metadata/*[name()='dc:creator']/text()", {"root" => "http://www.idpf.org/2007/opf"})
                         doc_date = doc.xpath("//root:package/root:metadata/*[name()='dc:date']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
                         doc_cover = doc.xpath_string("string(//root:package/root:metadata/root:meta[@name='cover']/@content)", {"root" => "http://www.idpf.org/2007/opf"}).to_s
+                        doc_container = container_xml_location
                         doc_dir = "#{LIBRARY_DIR}/#{item}"
                       end
                     end
 
                     # Hashes the file, which yields a kind of unique identifier regardless of metadata
-                    id = Digest::SHA256.hexdigest &.file("#{LIBRARY_DIR}/#{item}")
+                    doc_hash = Digest::SHA256.hexdigest &.file("#{LIBRARY_DIR}/#{item}")
 
                     json.object do
-                      json.field "id", hash # id_start += 1
+                      json.field "id", doc_hash # id_start += 1
                       json.field "title", doc_title
                       if doc_author
                         json.field "authors" do

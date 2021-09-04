@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    color: var(--tx2);
+    background-color: var(--bg);
+    margin: 0;
+}
+
+h1 {
+    line-height: 15px;
+}
+
+.nav {
+
+}
+
+.nav h1 {
+    font-size: x-large;
+    font-weight: 700;
+    margin-left: 45px;
+}
+.nav h2 {
+    font-size: larger;
+    font-weight: 500;
+    margin-left: 45px;
+    line-height: 5px;
+}

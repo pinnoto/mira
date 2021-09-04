@@ -31,17 +31,17 @@ class Application < Grip::Application
 
   # Static file handler
   # Will possibly be implemented
-  #def serve_files : Array(HTTP::Handler)
-  #  [
-  #    HTTP::StaticFileHandler.new(public_dir: "./static", fallthrough: true, directory_listing: false),
-  #  ] of HTTP::Handler
-  #end
+  def custom : Array(HTTP::Handler)
+    [
+      HTTP::StaticFileHandler.new(public_dir: "./static/", fallthrough: true, directory_listing: false),
+    ] of HTTP::Handler
+  end
 
   def routes
-    
     pipeline :jwt_auth, [
       TokenAuthorization.new
     ]
+
     scope "/api" do
       scope "/v1" do
         pipe_through :jwt_auth
@@ -51,7 +51,8 @@ class Application < Grip::Application
         get "/get_user_info", UserController, as: get_user_info
       end
     end
-    get "/api/v1/files/:id", FileController, as: serve_file
+    get "/files/:id", FileController, as: serve_file
+    #get "/cover/:id", FileController, as: serve_file_cover
     post "/api/v1/register", AuthController, as: register
     post "/api/v1/login", AuthController, as: login
   end
@@ -62,6 +63,7 @@ class Application < Grip::Application
 
 end
 
+# Make sure nothing is missing.
 case ""
 when LIBRARY_DIR
   puts "#{"ERROR ".colorize(:red)}Library directory not set in #{ENV["MIRA_CONFIG_DIR"].to_s.colorize(:yellow)}."
@@ -70,15 +72,6 @@ when LIBRARY_JSON_DIR
 when COVERS_DIR
   puts "#{"ERROR ".colorize(:red)}Cover image directory not set in #{ENV["MIRA_CONFIG_DIR"].to_s.colorize(:yellow)}."
 else
-  #case
-  #when Dir.exists?(LIBRARY_DIR) == false
-  #  puts "#{"ERROR ".colorize(:red)}Directory #{LIBRARY_DIR.to_s.colorize(:yellow)} does not exist."
-  #when Dir.exists?(COVERS_DIR) == false
-  #  puts "#{"ERROR ".colorize(:red)}Directory #{LIBRARY_DIR.to_s.colorize(:yellow)} does not exist."
-  #when Dir.exists?(LIBRARY_JSON_DIR) == false
-  #  puts "#{"ERROR ".colorize(:red)}Directory #{LIBRARY_DIR.to_s.colorize(:yellow)} does not exist."
-  #else 
-    app = Application.new
-    app.run
-  #end
+  app = Application.new
+  app.run
 end
