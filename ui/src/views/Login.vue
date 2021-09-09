@@ -42,7 +42,7 @@ export default {
               localStorage.setItem('token', res.data.token);
             }
             Object.assign(this.axios.defaults, {headers: {Authorization: this.$store.state.user.token}})
-            this.axios.get('/api/v1/auth/get_user_info')
+            this.axios.get('/api/v1/get_user_info')
                 .then(res => {
                   this.$store.commit('login', res.data)
                 }).catch(err => {

@@ -55,11 +55,15 @@ export default {
   data() {
     return {
       loading: true,
+      books: {
+        count: 0,
+        items: []
+      }
     }
   },
   computed: {
     onlyParsed: function() {
-      return this.$store.state.user.books.items.filter(function(u) {
+      return this.books.items.filter(function(u) {
         return !u.failedParse
       })
     }
@@ -73,10 +77,10 @@ export default {
     refreshLibrary() {
       this.loading = true
       this.axios
-          .get('/api/v1/auth/fetch_library')
+          .get('/api/v1/fetch_library')
           .then((res) => {
-            this.$store.state.user.books.count = res.data.totalResults
-            this.$store.state.user.books.items = res.data.items
+            this.books.count = res.data.totalResults
+            this.books.items = res.data.items
             this.loading = false
           })
           .catch((e) => {
@@ -87,7 +91,7 @@ export default {
     syncLibrary() {
       this.loading = true
       this.axios
-          .get('/api/v1/auth/scan_library')
+          .get('/api/v1/scan_library')
           .then(() => {
             this.refreshLibrary()
           })
@@ -99,7 +103,7 @@ export default {
     checkLogin() {
       if(this.$store.state.authEnabled) {
         this.axios
-            .get('/api/v1/auth/get_user_info')
+            .get('/api/v1/get_user_info')
             .catch((e) => {
               this.$store.commit('throwError', e)
               this.$router.push('/login')
