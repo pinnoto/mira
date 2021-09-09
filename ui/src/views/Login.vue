@@ -1,11 +1,14 @@
 <template>
   <div id="login" class="main-container">
+    <div class="card-alt">
       <div class="card-text">
-    <p>Username&nbsp;<input v-model="login.username"></p>
-    <p>Password&nbsp;<input v-model="login.password"></p>
-    <p data-tooltip="Logout on refresh"><input type="checkbox" v-model="login.tempLogin">Temporary Login</p>
-    <button @click="doLogin">Login</button>&nbsp;<button @click="$router.push('/register')">Don't have an account?</button>
+        <p>Username&nbsp;<input v-model="login.username"></p>
+        <p>Password&nbsp;<input v-model="login.password"></p>
+        <p data-tooltip="Logout on refresh"><input type="checkbox" v-model="login.tempLogin">Temporary Login</p>
+        <button @click="doLogin">Login</button>&nbsp;<button @click="$router.push('/register')">Don't have an account?</button>
+        <br><br>
       </div>
+    </div>
   </div>
 </template>
 

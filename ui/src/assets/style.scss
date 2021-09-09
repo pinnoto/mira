@@ -89,6 +89,17 @@ body {
 
 }
 
+.card-alt {
+  margin: 18px;
+  margin-left: 22px;
+  margin-right: 22px;
+  background-color: var(--sec-bg);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
 .card-text {
   margin-top: 0;
   min-height: 100px;
@@ -126,4 +137,14 @@ body {
 
 .errorText {
   color: red;
+}
+
+.noSelect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }

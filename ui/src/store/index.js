@@ -6,11 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {
-      id: '',
-      username: '',
-      token: '',
-      isAuthenticated: false,
-      bookmarks: []
+      id: 1,
+      username: 'Troplo',
+      token: 'test',
+      isAuthenticated: true,
+      bookmarks: [],
+      books: {
+        count: 0,
+        items: []
+      }
     },
     error: {
       message: '',
