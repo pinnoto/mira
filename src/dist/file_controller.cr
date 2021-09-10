@@ -67,7 +67,9 @@ class FileController < Grip::Controllers::Http
                 begin
                     #library_json = JSON.parse(File.read(LIBRARY_JSON_DIR)).items
                     book = items.find do |item|
-                        item.id == params["id"] 
+                        if item.id
+                            item.id == params["id"]
+                        end
                     end
 
                     if book && book.directory && book.cover

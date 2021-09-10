@@ -52,7 +52,6 @@ class Application < Grip::Application
       end
     end
     get "/files/:id", FileController, as: serve_file
-    #get "/cover/:id", FileController, as: serve_file_cover
     post "/api/v1/register", AuthController, as: register
     post "/api/v1/login", AuthController, as: login
   end

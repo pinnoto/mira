@@ -76,6 +76,7 @@ class LibraryController < Grip::Controllers::Http
                   # Happens with some EPUBs, I couldn't figure out why.
                   rescue
                     json.object do
+                      json.field "id", "failedParse"
                       json.field "failedParse", "#{item}"
                     end
                   end
