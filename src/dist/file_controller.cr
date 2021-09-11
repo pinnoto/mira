@@ -7,11 +7,11 @@ class FileController < Grip::Controllers::Http
 
         id = params["id"]?
 
-        #if id 
-        #    if id.ends_with? ".epub"
-        #        id = id.strip(".epub").to_s
-        #    end
-        #end
+        if id 
+            if id.ends_with? ".epub"
+                id = id.strip(".epub").to_s
+            end
+        end
 
         items = Array(Book).from_json(File.read(LIBRARY_JSON_DIR), root: "items")
 
