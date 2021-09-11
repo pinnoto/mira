@@ -35,12 +35,13 @@ class LibraryController < Grip::Controllers::Http
                     Compress::Zip::File.open("#{LIBRARY_DIR}/#{item}") do |zip|
                       # Find the container.xml, which has metadata about where to find everything
                       entry = zip["META-INF/container.xml"] || zip["container.xml"]
-                      container_xml_location = nil
+                      puts entry
+                      doc_location = nil
                       entry.open do |io|
                         doc = XML.parse(io)
-                        container_xml_location = doc.xpath_string("string(//root:container/root:rootfiles/root:rootfile[@media-type='application/oebps-package+xml']/@full-path)", {"root" => "urn:oasis:names:tc:opendocument:xmlns:container"}).to_s
+                        doc_location = doc.xpath_string("string(//root:container/root:rootfiles/root:rootfile[@media-type='application/oebps-package+xml']/@full-path)", {"root" => "urn:oasis:names:tc:opendocument:xmlns:container"}).to_s
                       end
-                      entry = zip["#{container_xml_location}"]
+                      entry = zip["#{doc_location}"]
                       entry.open do |io|
                         doc = XML.parse(io)
                         # Consider replacing this with an XPath replacement shard, this is incredibly frustrating.
@@ -48,7 +49,7 @@ class LibraryController < Grip::Controllers::Http
                         doc_author = doc.xpath_nodes("//root:package/root:metadata/*[name()='dc:creator']/text()", {"root" => "http://www.idpf.org/2007/opf"})
                         doc_date = doc.xpath("//root:package/root:metadata/*[name()='dc:date']/text()", {"root" => "http://www.idpf.org/2007/opf"}).to_s
                         doc_cover = doc.xpath_string("string(//root:package/root:metadata/root:meta[@name='cover']/@content)", {"root" => "http://www.idpf.org/2007/opf"}).to_s
-                        doc_container = container_xml_location
+                        #doc_container = container_xml_location
                         doc_dir = "#{LIBRARY_DIR}/#{item}"
                       end
                     end
@@ -76,7 +77,6 @@ class LibraryController < Grip::Controllers::Http
                   # Happens with some EPUBs, I couldn't figure out why.
                   rescue
                     json.object do
-                      json.field "id", "failedParse"
                       json.field "failedParse", "#{item}"
                     end
                   end

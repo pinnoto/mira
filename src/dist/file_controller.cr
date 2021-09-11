@@ -7,6 +7,12 @@ class FileController < Grip::Controllers::Http
 
         id = params["id"]?
 
+        #if id 
+        #    if id.ends_with? ".epub"
+        #        id = id.strip(".epub").to_s
+        #    end
+        #end
+
         items = Array(Book).from_json(File.read(LIBRARY_JSON_DIR), root: "items")
 
         if id
@@ -14,7 +20,7 @@ class FileController < Grip::Controllers::Http
                 begin
                     #library_json = JSON.parse(File.read(LIBRARY_JSON_DIR)).items
                     book = items.find do |item|
-                        item.id == params["id"] 
+                        item.id == id
                     end
 
                     if book && book.directory && File.exists?(book.directory)
@@ -23,8 +29,8 @@ class FileController < Grip::Controllers::Http
                         end
 
                         context
-                            .put_resp_header("Content-Type", "application/epub+zip")
                             .put_status(200)
+                            .put_resp_header("Content-Type", "application/epub+zip")
                             .halt
                     else
                         context
