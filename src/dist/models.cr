@@ -9,27 +9,18 @@ class User < Granite::Base
     column id : Int64, primary: true
     column username : String
     column password : String
-    #column rank : Int32
+    column rank : Int32
     column created_at : Time
 end
 
-class Book
-    include JSON::Serializable
-
-    property id : String
-    property title : String
-    property authors : Array(String)
-    property date : String
-    property cover : String
-    property directory : String
-    #property category : String
+class Session < Granite::Base 
+    connection sqlite
+    
+    column id : Int64, primary: true
+    column user_id : Int64
+    column book_id : String 
+    column page : Int32
+    column bookmarks : Array(String)
 end
 
-class Library
-    include JSON::Serializable
-
-    property totalResults : Int32
-    property items : Array(Book)
-end
-
-User.migrator.drop_and_create
+#User.migrator.drop_and_create

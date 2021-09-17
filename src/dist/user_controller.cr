@@ -10,7 +10,7 @@ class UserController < Grip::Controllers::Http
 
         payload, header = JWT.decode(token, ENV["MIRA_SECRET_KEY"], JWT::Algorithm::HS512)
 
-        db_user = User.find_by(id: payload["id"].to_s.to_i)
+        db_user = User.find_by(id: payload["id"].to_i)
 
         if db_user
           context
