@@ -9,3 +9,5 @@ mira.db
 shard.lock
 mira
 mira.o
+main
+main.o
