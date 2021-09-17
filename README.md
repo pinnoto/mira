@@ -1,7 +1,10 @@
 # mira
 <img src="https://img.shields.io/github/license/pinnoto/mira"/> <img src="https://img.shields.io/github/last-commit/pinnoto/mira"/> <img src="https://img.shields.io/badge/Crystal-1.1.1-black"/>
 
-EPUB media server written in Crystal 
+EPUB media server written in Crystal
+
+Join us on Matrix if you want to talk to us or need help:
+`#pinnoto@troplo.com`
 
 ## Installation (Backend)
 1. Clone the repositry and cd into it `git clone https://github.com/pinnoto/mira && cd mira`
