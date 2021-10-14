@@ -8,7 +8,7 @@ class TokenAuthorization
                 .split("Bearer ")
                 .last
 
-            payload, header = JWT.decode(token, ENV["MIRA_SECRET_KEY"], JWT::Algorithm::HS512)
+            payload = JWT.decode(token, ENV["MIRA_SECRET_KEY"], JWT::Algorithm::HS512)
 
             context
         rescue
