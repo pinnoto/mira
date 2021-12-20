@@ -1,0 +1,12 @@
+diff --git a/node_modules/epubjs/src/managers/views/iframe.js b/node_modules/epubjs/src/managers/views/iframe.js
+index 76b2c1d..2b64c6b 100644
+--- a/node_modules/epubjs/src/managers/views/iframe.js
++++ b/node_modules/epubjs/src/managers/views/iframe.js
+@@ -81,6 +81,7 @@ class IframeView {
+ 		}
+ 
+ 		this.iframe = document.createElement("iframe");
++		this.iframe.setAttribute("sandbox", "allow-same-origin");
+ 		this.iframe.id = this.id;
+ 		this.iframe.scrolling = "no"; // Might need to be removed: breaks ios width calculations
+ 		this.iframe.style.overflow = "hidden";

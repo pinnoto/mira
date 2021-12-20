@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -14,8 +15,6 @@
     "epubjs": "^0.3.88",
     "glob-parent": "5.1.2",
     "moment": "^2.29.1",
-    "node-sass": "^6.0.1",
-    "sass-loader": "^10",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
     "vue-router": "^3.2.0",
