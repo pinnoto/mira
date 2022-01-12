@@ -7166,14 +7166,6 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-readium-js@^0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/readium-js/-/readium-js-0.0.0.tgz#573e931b4298f18c4374231707c28057dd7d48f1"
-  integrity sha1-Vz6TG0KY8YxDdCMXB8KAV919SPE=
-  dependencies:
-    requirejs latest
-    requirejs-text latest
-
 regenerate-unicode-properties@^8.2.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/regenerate-unicode-properties/-/regenerate-unicode-properties-8.2.0.tgz#e5de7111d655e7ba60c057dbe9ff37c87e65cdec"
@@ -7309,16 +7301,6 @@ require-main-filename@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-2.0.0.tgz#d0b329ecc7cc0f61649f62215be69af54aa8989b"
   integrity sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==
-
-requirejs-text@latest:
-  version "2.0.16"
-  resolved "https://registry.yarnpkg.com/requirejs-text/-/requirejs-text-2.0.16.tgz#b6f3e20689aa998e36641bc4f8bd11b7964ac872"
-  integrity sha512-XrzjeTb1pwzIWmkz8qnUiM20gENgiwB+66IciNuziwlaPAJsYQsQPSYyQ1kD4tGKGZxTisIfDbOHk02DpI/76Q==
-
-requirejs@latest:
-  version "2.3.6"
-  resolved "https://registry.yarnpkg.com/requirejs/-/requirejs-2.3.6.tgz#e5093d9601c2829251258c0b9445d4d19fa9e7c9"
-  integrity sha512-ipEzlWQe6RK3jkzikgCupiTbTvm4S0/CAU5GlgptkN5SO6F3u0UD0K18wy6ErDqiCyP4J4YYe1HuAShvsxePLg==
 
 requires-port@^1.0.0:
   version "1.0.0"

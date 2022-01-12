@@ -35,8 +35,6 @@ DB_NAME = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_name.rstrip('/'
 DB_USER = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_user.rstrip('/')
 DB_PASSWORD = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_password.rstrip('/')
 
-puts VERSION[0]
-
 class Application < Grip::Application
   def routes
     pipeline :jwt_auth, [
@@ -79,6 +77,7 @@ when DB_NAME
 when DB_USER
   puts "#{"ERROR ".colorize(:red)}Database user not set in #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
 else
+  puts "#{"INFO  ".colorize(:light_gray)}Using config from #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
   app = Application.new
   app.run
 end
