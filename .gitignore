@@ -9,3 +9,4 @@ shard.lock
 library
 .vs
 mira.db
+ui/vue.config.js
