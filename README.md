@@ -8,7 +8,7 @@ NOTE: Mira is currently in development, and cannot be used in its current state.
 ## Installation (Backend)
 1. Clone the repositry and cd into it `git clone https://github.com/pinnoto/mira && cd mira`
 2. Create a PostgreSQL database
-3. Set the `MIRA_CONFIG` environment variable to whereever you want your config file to be, it's recommended you put it in `/etc/mira/config.yml`. Example config:
+3. Set the `MIRA_CONFIG` environment variable to where you want your config file to be: `export MIRA_CONFIG=/etc/mira/config.yml` and configure it
 ```yml
 port: 11880
 working_dir: /home/user/mira
