@@ -6,6 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {
+      bg: "#161616",
+      fg: "#cccccc",
+      a: "#0e62cb",
       id: 1,
       username: 'Troplo',
       token: 'test',
@@ -20,7 +23,7 @@ export default new Vuex.Store({
       message: '',
       enabled: false
     },
-    authEnabled: true
+    authEnabled: false
   },
   mutations: {
     login(state, data) {
@@ -45,6 +48,11 @@ export default new Vuex.Store({
     },
     setAuth(state, data) {
       state.authEnabled = data
+    },
+    saveCustomization(state, data) {
+      state.user.a = data.a
+      state.user.bg = data.bg
+      state.user.fg = data.fg
     }
   },
   actions: {

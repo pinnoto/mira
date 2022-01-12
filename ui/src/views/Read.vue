@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="epub-container">
-      <div id="book-area" style="background: #ffffff;"></div>
+      <div id="book-area"></div>
     </div>
     <slot name="progress-bar" :onChange="onChange" :ready="ready">
       <center>
@@ -37,8 +37,8 @@ export default {
       progressValue: 0,
       slide: null,
       cfi: null,
-      width: 600,
-      height: 1000,
+      width: 11,
+      height: 1200,
       locations: null,
     }
   },
@@ -57,7 +57,7 @@ export default {
     },
     screenSize() {
       this.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-      this.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - this.contentBookModify
+      this.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
     },
     keyListener (e) {
       if ((e.keyCode || e.which) === 37) {
@@ -67,18 +67,61 @@ export default {
         this.rendition.next()
       }
     },
+    applyTheme() {
+      let theme = {
+        bg: this.$store.state.user.bg,
+        fg: this.$store.state.user.fg,
+        l: this.$store.state.user.a,
+        ff: "'Open Sans', sans-serif",
+        fs: "11pt",
+        lh: "1.4",
+        ta: "justify",
+        m: "0"
+      };
+
+      this.rendition.getContents().forEach(c => c.addStylesheetRules({
+        "body": {
+          "background": theme.bg,
+          "color": theme.fg,
+          "font-family": `${theme.ff} !important`,
+          "font-size": `${theme.fs} !important`,
+          "line-height": `${theme.lh} !important`,
+          "text-align": `${theme.ta} !important`,
+          "padding-top": theme.m,
+          "padding-bottom": theme.m
+        },
+        "a": {
+          "color": "inherit !important",
+          "text-decoration": "none !important",
+          "-webkit-text-fill-color": "inherit !important"
+        },
+        "a:link": {
+          "color": `${theme.l} !important`,
+          "text-decoration": "none !important",
+          "-webkit-text-fill-color": `${theme.l} !important`
+        },
+        "a:link:hover": {
+          "background": "rgba(0, 0, 0, 0.1) !important"
+        },
+        "img": {
+          "max-width": "100% !important"
+        },
+      }));
+    },
     initReader() {
       this.rendition = this.book.renderTo("book-area", {
         contained: true,
         height: this.height
       })
+
+      this.rendition.hooks.content.register(this.applyTheme);
       this.screenSize()
       this.rendition.display()
     }
   },
   mounted() {
     window.addEventListener('keyup', this.keyListener)
-    this.book = ePub("/epub2.epub")
+    this.book = ePub("/vuejs-example-real-world-applications.epub")
     this.book.loaded.navigation.then(({ toc }) => {
       this.toc = toc
       this.$emit('toc', this.toc)

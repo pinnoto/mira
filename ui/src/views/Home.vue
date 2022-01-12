@@ -7,7 +7,7 @@
       </div>
       <div class="header-icons" v-if="$store.state.user.username">
         <span style="cursor: pointer" @click="$router.push('/test')" class="material-icons-outlined">turned_in_not</span>
-        <span style="cursor: pointer" @click="$router.push('/test')" class="material-icons-outlined">style</span>
+        <span style="cursor: pointer" @click="$router.push('/test')" class="material-icons-outlined">palette</span>
         <span style="cursor: pointer" @click="$router.push('/test')" class="material-icons-outlined">library_books</span>
         <span style="cursor: pointer" @click="syncLibrary()" class="material-icons-outlined">sync</span>
       </div>

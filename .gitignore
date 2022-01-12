@@ -5,3 +5,7 @@
 *.dwarf
 shard.lock
 .editorconfig 
+.idea
+library
+.vs
+mira.db
