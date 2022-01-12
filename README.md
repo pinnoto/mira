@@ -8,7 +8,18 @@ NOTE: Mira is currently in development, and cannot be used in its current state.
 ## Installation (Backend)
 1. Clone the repositry and cd into it `git clone https://github.com/pinnoto/mira && cd mira`
 2. Create a PostgreSQL database
-3. 
+3. Set the `MIRA_CONFIG` environment variable to whereever you want your config file to be, it's recommended you put it in `/etc/mira/config.yml`. Example config:
+```yml
+port: 11880
+working_dir: /home/user/mira
+library: /home/user/library
+covers: /home/user/covers
+open_registrations: true
+db_name: mira
+db_user: mira
+db_password: replaceme123
+```
+4. Build it with release optimizations `crystal build --release ./src/mira.cr`
 
 ## Installation (Frontend)
 1. Go into the `ui` folder
