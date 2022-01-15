@@ -1,5 +1,6 @@
+require "pg"
 require "grip"
-require "clear"
+require "granite"
 require "crystal-argon2"
 require "jwt"
 require "xml"
@@ -77,7 +78,7 @@ when DB_NAME
 when DB_USER
   puts "#{"ERROR ".colorize(:red)}Database user not set in #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
 else
-  puts "#{"INFO  ".colorize(:light_gray)}Using config from #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
+  puts "#{"INFO  ".colorize(:dark_gray)}Using config from #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
   app = Application.new
   app.run
 end

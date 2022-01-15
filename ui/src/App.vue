@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <center>
-    <p class="errorText" v-if="$store.state.error.enabled">{{$store.state.error.message}}</p>
+      <p class="error-text" v-if="$store.state.error.enabled">{{$store.state.error.message}}</p>
     </center>
     <router-view/>
   </div>

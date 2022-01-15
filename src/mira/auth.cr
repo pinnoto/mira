@@ -28,32 +28,28 @@ class AuthController < Grip::Controllers::Http
     password = params["password"].to_s
   
     if username && password
-      begin
-        db_username = User.query.find!({username: username})
-      
-        if db_username
-          context
-            .put_status(400)
-            .json({message: "Username has been taken."})
-            .halt
-        else
-          hasher = Argon2::Password.new
-  
-          user = User.new({username: username.to_s,  created_at: Time.utc})
-          user.password = hasher.create(password.to_s)
-          user.save!
-  
-          token = JWT.encode({"id" => "#{user.id}", "exp" => (Time.utc + 4.week).to_unix, "iat"  => Time.utc.to_unix}, ENV["MIRA_SECRET"], JWT::Algorithm::HS512)
-          
-          context
-            .put_status(200)
-            .json({token: token})
-            .halt
-        end
-      rescue
+      db_user = User.find_by(username: username)
+      if db_user
         context
-          .put_status(400)
-          .json({message: "Username is taken."})
+          .put_status(409)
+          .json({message: "Username or password is taken."})
+          .halt
+      else
+        hasher = Argon2::Password.new
+            
+        user = User.new
+        user.username = username
+        user.password = hasher.create(password.to_s)
+        user.rank = 1
+        user.created_at = Time.utc
+        user.last_login = Time.utc
+        user.save
+
+        token = JWT.encode({"id" => "#{user.id}", "exp" => (Time.utc + 4.week).to_unix, "iat"  => Time.utc.to_unix}, ENV["MIRA_SECRET"], JWT::Algorithm::HS512)
+            
+        context
+          .put_status(200)
+          .json({token: token})
           .halt
       end
     else
@@ -71,7 +67,8 @@ class AuthController < Grip::Controllers::Http
     password = params["password"].to_s
 
     if username && password
-      db_user = User.query.find!({username: username})
+      db_user = User.find_by(username: username)
+
       if db_user
         begin
           hashed_password = db_user.password
@@ -93,6 +90,7 @@ class AuthController < Grip::Controllers::Http
         context
           .put_status(400)
           .json({message: "Wrong username or password."})
+          .halt
       end
     else
       context

@@ -1,14 +1,17 @@
 <template>
   <div id="login" class="main-container">
-    <div class="card-alt">
-      <div class="card-text">
-        <p>Username&nbsp;<input v-model="login.username"></p>
-        <p>Password&nbsp;<input v-model="login.password"></p>
-        <p data-tooltip="Logout on refresh"><input type="checkbox" v-model="login.tempLogin">Temporary Login</p>
-        <button @click="doLogin">Login</button>&nbsp;<button @click="$router.push('/register')">Don't have an account?</button>
-        <br><br>
-      </div>
+    <div class="card auth-card">
+      <!--<p>Username<input v-model="login.username" class="input-box"></p>
+      <p>Password<input v-model="login.password" class="input-box"></p>
+      <p data-tooltip="Logout on refresh"><input type="checkbox" v-model="login.tempLogin" class="checkmark">Temporary Login</p>
+      <button @click="doLogin">Login</button>&nbsp;<button @click="$router.push('/register')">Don't have an account?</button>
+      <br><br>-->
+      <h1>Login to Mira</h1>
+      <p>Username</p><input v-model="login.username" class="input">
+      <p>Password</p><input type="password" v-model="login.password" class="input">
+      <a @click="doLogin" class="btn" >Sign In</a> <a @click="$router.push('/register')" class="tip">Don't have an account?</a>
     </div>
+    <div class="card"></div>
   </div>
 </template>
 
@@ -29,7 +32,7 @@ export default {
   },
   methods: {
     doLogin() {
-      this.login.loading  = true
+      this.login.loading = true
       this.axios
           .post('/api/v1/login', {
             username: this.login.username,

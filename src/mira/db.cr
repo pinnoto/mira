@@ -1,33 +1,39 @@
-Clear::SQL.init("postgres://#{DB_USER}:#{DB_PASSWORD}@localhost/#{DB_NAME}")
+require "granite/adapter/pg"
 
-class User
-  include Clear::Model
+Granite::Connections << Granite::Adapter::Pg.new(name: "postgres", url: "postgres://#{DB_USER}:#{DB_PASSWORD}@localhost/#{DB_NAME}")
 
-  column id : UUID, primary: true
+class User < Granite::Base
+  connection postgres
 
+  column id : Int64, primary: true
   column username : String
   column password : String
-  column rank : Int8
+  column rank : Int32
   column created_at : Time
+  column last_login : Time
 end
 
-class Session
-  include Clear::Model
+#class Session < Granite::Base
+#  connection postgres
+#
+#  column id : String
+#  column page : Int32?
+#  column notes : Array(String)?
+#  column bookmarks : Array(String)?
+#end
 
-  column id : String, primary: true
-  column page : Int32?
-  column notes : Array(String)?
-  column bookmarks : Array(String)?
-end
+#class Book < Granite::Base
+#  connection postgres
+#  
+#  column id : String
+#  column title : String
+#  column authors : Array(String)
+#  column date : String?
+#  column date_added : Time
+#  column cover : String?
+#  column directory : String
+#end
 
-class Book
-  include Clear::Model
-  
-  column id : String, primary: true
-  column title : String
-  column authors : Array(String)
-  column date : String?
-  column date_added : Time
-  column cover : String?
-  column directory : String
-end
+User.migrator.drop_and_create
+#Session.migrator.drop_and_create
+#Book.migrator.drop_and_create

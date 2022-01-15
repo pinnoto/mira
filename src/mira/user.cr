@@ -9,7 +9,7 @@ class UserController < Grip::Controllers::Http
 
       payload, header = JWT.decode(token, ENV["MIRA_SECRET"], JWT::Algorithm::HS512)
 
-      db_user = User.query.find!({id: payload["id"]})
+      db_user = User.find_by(id: payload["id"].to_s)
 
       if db_user
         context
@@ -19,11 +19,13 @@ class UserController < Grip::Controllers::Http
       else
         context
           .put_status(400)
+          .json({message: "User does not exist."})
           .halt
       end
     rescue
       context
         .put_status(403)
+        .json({message: "Forbidden"})
         .halt
     end
   end

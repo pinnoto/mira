@@ -23,7 +23,7 @@ export default new Vuex.Store({
       message: '',
       enabled: false
     },
-    authEnabled: false
+    authEnabled: true
   },
   mutations: {
     login(state, data) {

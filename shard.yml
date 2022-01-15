@@ -14,9 +14,11 @@ dependencies:
     github: grip-framework/grip
   jwt:
     github: crystal-community/jwt
-  clear:
-    github: anykeyh/clear
+  granite:
+    github: amberframework/granite
     branch: master
+  pg:
+    github: will/crystal-pg
   crystal-argon2:
     github: Axentro/crystal-argon2
 

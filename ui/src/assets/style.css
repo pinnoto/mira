@@ -5,18 +5,20 @@
 }
 
 :root {
-  --bg: #161616;
-  --sec-bg: #2e2e2e;
+  --bg: #1c1d1f;
+  --sec-bg: #2c2c2e;
   --prim-color: #f8f8f8;
   --sec-color: #dfdfdf;
   --tert-color: #bbb;
 }
+
 body {
   margin: 0;
   background-color: var(--bg);
   color: var(--sec-color);
   font-family: 'Inter', sans-serif;
 }
+
 .header {
   background-color: var(--bg);
   display: flex;
@@ -28,99 +30,105 @@ body {
   left: 0;
   right: 0;
 }
+
 .header h1 {
   font-size: 24px;
   color: var(--prim-color);
 }
+
 .header h2 {
   margin-top: -16px;
   font-size: 18px;
   color: var(--tert-color);
 }
-.header-meta {
-  align-items: center;
-  padding-left: 30px;
-  width: 90%;
+
+.card {
+  display: flex;
+  background-color: var(--sec-bg);
+  color: var(--sec-color);
+  border-radius: 6px;
 }
-.header-icons {
+
+.auth-card {
+  flex-direction: column;
+  width: 350px;
+  height: 400px;
+  margin: auto;
+  margin-top: 100px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.auth-card .tip {
+  font-weight: 600;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 12px;
+  letter-spacing: -0.2px;
+}
+
+.card p {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.btn {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: auto;
-  right: 0;
-  top: 0;
-  padding-right: 30px;
-}
-.header-icons span {
-  font-size: 36px;
-  margin-left: 18px;
-}
-.main-container {
-  display: flex;
-  flex-flow: wrap;
-  margin: auto;
-  width: 80%;
-  text-align: center;
   justify-content: center;
+  background-color: var(--sec-color);
+  color: var(--bg);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  text-align: center;
+  padding: 10px;
+  min-width: 30px;
+  max-width: 999px; /* my sanity is withering */
+  transition: all ease-in-out 0.3s;
+  border-radius: 6px;
 }
-.card {
-  margin: 18px;
-  margin-left: 22px;
-  margin-right: 22px;
-  background-color: var(--sec-bg);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+
+.btn:hover {
   cursor: pointer;
+  background-color: var(--tert-color);
 }
-.card:hover {
-  box-shadow: 0 11px 11px 0 rgba(0, 0, 0, .16);
-  transform: translateY(-5px);
-}
-.card-alt {
-  margin: 18px;
-  margin-left: 22px;
-  margin-right: 22px;
-  background-color: var(--sec-bg);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-.card-text {
-  margin-top: 0;
-  min-height: 100px;
-  width: 230px;
-}
-.card-text h1 {
-  word-wrap: break-word;
-  color: var(--prim-color);
-  font-size: 18px;
-}
-.card-text h2 {
-  word-wrap: break-word;
-  color: var(--sec-color);
-  font-size: 16px;
-  font-weight: 600;
-}
-.card-text h3 {
-  word-wrap: break-word;
-  color: var(--tert-color);
-  font-weight: 400;
-  font-size: 14px;
-}
-.cover-img {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  margin-bottom: 0;
-  min-height: 300px;
+
+.input {
   width: 100%;
-  background-color: #494949;
+  height: 36px;
+  border: none;
+  font-size: 18px;
+  padding-left: 10px;
+  background-color: var(--bg);
+  color: var(--sec-color);
+  border-radius: 6px;
 }
-.errorText {
-  color: red;
+
+.auth-card .input {
+  margin-top: -15px;
 }
+
+.auth-card .input:last-of-type {
+  margin-bottom: 30px;
+}
+
+.auth-card h1 {
+  font-size: 28px;
+  margin: 0;
+  margin-top: 20px;
+}
+
+.input:focus {
+  outline: none;
+  border-bottom: var(--sec-color);
+}
+
+.error-text {
+  color: #f14545;
+}
+
 .noSelect {
   -webkit-touch-callout: none;
   /* iOS Safari */
