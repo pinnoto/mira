@@ -39,7 +39,7 @@ export default {
         throw Error('Password does not match, registration will not continue.')
       }
       this.axios
-          .post('/api/v1/register', {
+          .post('/api/v1/auth/register', {
             username: this.register.username,
             password: this.register.password
           })
@@ -51,7 +51,7 @@ export default {
                 localStorage.setItem('token', res.data.token);
               }
               Object.assign(this.axios.defaults, {headers: {Authorization: this.$store.state.user.token}})
-              this.axios.get('/api/v1/get_user_info')
+              this.axios.get('/api/v1/user')
                   .then(res => {
                     this.$store.commit('login', res.data)
                   }).catch(err => {

@@ -58,7 +58,6 @@ class Application < Grip::Application
 
         scope "/user" do
           get "/", UserController, as: get_user_info
-          
         end
         
         #post "/post_session", SessionController, as: post_session

@@ -12,7 +12,7 @@ export default {
   mounted() {
     this.$store.commit('updateToken', localStorage.getItem("token"))
       Object.assign(this.axios.defaults, {headers: {Authorization: this.$store.state.user.token}})
-      this.axios.get('/api/v1/get_user_info')
+      this.axios.get('/api/v1/user')
           .then(res => {
             this.$store.commit('login', res.data)
           }).catch(err => {

@@ -77,7 +77,7 @@ export default {
     refreshLibrary() {
       this.loading = true
       this.axios
-          .get('/api/v1/fetch_library')
+          .get('/api/v1/library/fetch')
           .then((res) => {
             this.books.count = res.data.totalResults
             this.books.items = res.data.items
@@ -91,7 +91,7 @@ export default {
     syncLibrary() {
       this.loading = true
       this.axios
-          .get('/api/v1/scan_library')
+          .get('/api/v1/library/scan')
           .then(() => {
             this.refreshLibrary()
           })
@@ -103,7 +103,7 @@ export default {
     checkLogin() {
       if(this.$store.state.authEnabled) {
         this.axios
-            .get('/api/v1/get_user_info')
+            .get('/api/v1/user')
             .catch((e) => {
               this.$store.commit('throwError', e)
               this.$router.push('/login')

@@ -90,7 +90,6 @@ class LibraryController < Grip::Controllers::Http
           end
 
           doc_id = Digest::SHA256.hexdigest &.file("#{item}")
-
           doc = Book.find_by(id: doc_id)
 
           unless doc && doc_authors
@@ -103,12 +102,12 @@ class LibraryController < Grip::Controllers::Http
             doc.cover = doc_cover
             doc.directory = doc_dir
             doc.success = true
-            doc.save!
+            doc.save
           end
         rescue
           puts "#{"ERROR ".colorize(:red)}Failed to parse #{item.colorize(:yellow)}"
-          doc_id = Digest::SHA256.hexdigest &.file("#{item}")
 
+          doc_id = Digest::SHA256.hexdigest &.file("#{item}")
           doc = Book.find_by(id: doc_id)
 
           unless doc
