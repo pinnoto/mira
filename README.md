@@ -1,9 +1,9 @@
 # mira
 <img src="https://img.shields.io/github/license/pinnoto/mira"/> <img src="https://img.shields.io/github/last-commit/pinnoto/mira"/> <img src="https://img.shields.io/badge/Crystal-1.3.0-black"/>
 
-EPUB media server written in Crystal
+EPUB server and reader written in Crystal
 
-NOTE: Mira is currently in development, and cannot be used in its current state.
+NOTE: Mira is currently in development, but is close to being done!
 
 ## Installation (Backend)
 1. Clone the repositry and cd into it `git clone https://github.com/pinnoto/mira && cd mira`
