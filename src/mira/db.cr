@@ -1,6 +1,6 @@
 require "granite/adapter/pg"
 
-Granite::Connections << Granite::Adapter::Pg.new(name: "postgres", url: "postgres://#{DB_USER}:#{DB_PASSWORD}@localhost/#{DB_NAME}")
+Granite::Connections << Granite::Adapter::Pg.new(name: "postgres", url: "postgres://#{DB_USER}:#{DB_PASSWORD}@#{DB_HOST}/#{DB_NAME}")
 
 class User < Granite::Base
   connection postgres
@@ -36,6 +36,6 @@ class Book < Granite::Base
   column success : Bool?
 end
 
-# User.migrator.drop_and_create
-# Session.migrator.drop_and_create
-Book.migrator.drop_and_create
+#User.migrator.drop_and_create
+#Session.migrator.drop_and_create
+#Book.migrator.drop_and_create

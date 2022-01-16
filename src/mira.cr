@@ -15,13 +15,13 @@ require "./mira/*"
 class YamlConfig
   include YAML::Serializable
   property port : Int16 = 11880
-  property working_dir : String = ""
   property library : String = ""
   property covers : String = ""
   property open_registrations : Bool = false
   property db_name : String = ""
   property db_user : String = ""
   property db_password : String = ""
+  property db_host : String = ""
 end
 
 VERSION = "1.0.0"
@@ -29,12 +29,12 @@ ENV["MIRA_SECRET"] ||= Random::Secure.urlsafe_base64(256)
 ENV["MIRA_CONFIG"] ||= "/etc/mira/config.yml"
 # .rstrip strips the last /'s, if any, so it'd end in nothing.
 PORT        = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).port.to_i
-WORKING_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).working_dir.rstrip('/')
 LIBRARY     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).library.rstrip('/')
 COVERS      = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).covers.rstrip('/')
 DB_NAME     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_name.rstrip('/')
 DB_USER     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_user.rstrip('/')
 DB_PASSWORD = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_password.rstrip('/')
+DB_HOST = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_host.rstrip('/')
 
 class Application < Grip::Application
   def routes
@@ -77,14 +77,14 @@ end
 case ""
 when LIBRARY
   puts "#{"ERROR ".colorize(:red)}Library directory not set in #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
-when WORKING_DIR
-  puts "#{"ERROR ".colorize(:red)}Library JSON file directory not set in #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
 when COVERS
   puts "#{"ERROR ".colorize(:red)}Cover image directory not set in #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
 when DB_NAME
   puts "#{"ERROR ".colorize(:red)}Database name not set in #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
 when DB_USER
   puts "#{"ERROR ".colorize(:red)}Database user not set in #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
+when DB_HOST
+  puts "#{"ERROR ".colorize(:red)}Database hostname not set in #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
 else
   puts "#{"INFO  ".colorize(:dark_gray)}Using config from #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
   app = Application.new

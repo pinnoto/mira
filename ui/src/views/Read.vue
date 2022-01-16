@@ -121,7 +121,11 @@ export default {
   },
   mounted() {
     window.addEventListener('keyup', this.keyListener)
-    this.book = ePub("/api/v1/file/" + this.$route.params.book + ".epub")
+    this.book = ePub("/api/v1/file/" + this.$route.params.book + ".epub", {
+      requestHeaders: {
+        "Authorization": this.$store.state.user.token
+      }
+    })
     this.book.loaded.navigation.then(({ toc }) => {
       this.toc = toc
       this.$emit('toc', this.toc)

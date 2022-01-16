@@ -10,7 +10,7 @@
       <p>Username</p><input v-model="register.username" class="input">
       <p>Password</p><input type="password" v-model="register.password" class="input">
       <p>Confirm Password</p><input type="password" v-model="register.confirmPassword" class="input">
-      <a @click="doLogin" class="btn" >Sign Up</a> <a @click="$router.push('/login')" class="tip">Have an account?</a>
+      <a @click="doRegister" class="btn" >Sign Up</a> <a @click="$router.push('/login')" class="tip">Have an account?</a>
     </div>
   </div>
 </template>
