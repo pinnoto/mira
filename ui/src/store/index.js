@@ -6,12 +6,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {
-      bg: "#161616",
-      fg: "#cccccc",
-      a: "#0e62cb",
+      bg: "#1c1d1f",
+      fg: "#dfdfdf",
+      a: "#f8f8f8",
       id: 1,
       username: 'Troplo',
-      token: 'test',
+      token: localStorage.getItem("token"),
       isAuthenticated: true,
       bookmarks: [],
       books: {

@@ -123,7 +123,7 @@ export default {
     window.addEventListener('keyup', this.keyListener)
     this.book = ePub("/api/v1/file/" + this.$route.params.book + ".epub", {
       requestHeaders: {
-        "Authorization": this.$store.state.user.token
+        "Authorization": localStorage.getItem("token")
       }
     })
     this.book.loaded.navigation.then(({ toc }) => {
