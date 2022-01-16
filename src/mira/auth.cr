@@ -9,7 +9,7 @@ class TokenAuthorization
         .last
 
       payload, header = JWT.decode(token, ENV["MIRA_SECRET"], JWT::Algorithm::HS512)
-      
+
       context
     rescue
       context
@@ -20,13 +20,12 @@ class TokenAuthorization
 end
 
 class AuthController < Grip::Controllers::Http
-  
   def register(context : Context) : Context
     params = context.fetch_json_params
 
     username = params["username"].to_s
     password = params["password"].to_s
-  
+
     if username && password
       db_user = User.find_by(username: username)
       if db_user
@@ -36,7 +35,7 @@ class AuthController < Grip::Controllers::Http
           .halt
       else
         hasher = Argon2::Password.new
-            
+
         user = User.new
         user.username = username
         user.password = hasher.create(password.to_s)
@@ -45,8 +44,8 @@ class AuthController < Grip::Controllers::Http
         user.last_login = Time.utc
         user.save
 
-        token = JWT.encode({"id" => "#{user.id}", "exp" => (Time.utc + 4.week).to_unix, "iat"  => Time.utc.to_unix}, ENV["MIRA_SECRET"], JWT::Algorithm::HS512)
-            
+        token = JWT.encode({"id" => "#{user.id}", "exp" => (Time.utc + 4.week).to_unix, "iat" => Time.utc.to_unix}, ENV["MIRA_SECRET"], JWT::Algorithm::HS512)
+
         context
           .put_status(200)
           .json({token: token})
@@ -74,8 +73,8 @@ class AuthController < Grip::Controllers::Http
           hashed_password = db_user.password
           Argon2::Password.verify_password(password, hashed_password)
 
-          token = JWT.encode({"id" => "#{db_user.id}", "exp" => (Time.utc + 4.week).to_unix, "iat"  => Time.utc.to_unix}, ENV["MIRA_SECRET"], JWT::Algorithm::HS512)
-          
+          token = JWT.encode({"id" => "#{db_user.id}", "exp" => (Time.utc + 4.week).to_unix, "iat" => Time.utc.to_unix}, ENV["MIRA_SECRET"], JWT::Algorithm::HS512)
+
           context
             .put_status(200)
             .json({token: token})
@@ -99,5 +98,4 @@ class AuthController < Grip::Controllers::Http
         .halt
     end
   end
-
 end

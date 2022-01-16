@@ -1,5 +1,4 @@
 class UserController < Grip::Controllers::Http
-
   def get_user_info(context : Context) : Context
     begin
       token = context
@@ -29,5 +28,4 @@ class UserController < Grip::Controllers::Http
         .halt
     end
   end
-
 end

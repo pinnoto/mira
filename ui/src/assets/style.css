@@ -19,6 +19,16 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+a {
+  color: var(--prim-color);
+  transition: all ease-in-out 0.1s;
+}
+
+a:hover {
+  color: var(--tert-color);
+  cursor: pointer;
+}
+
 .header {
   background-color: var(--bg);
   display: flex;
@@ -57,6 +67,7 @@ body {
   margin-top: 100px;
   padding-left: 25px;
   padding-right: 25px;
+  padding-top: 5px;
 }
 
 .auth-card .tip {
@@ -86,13 +97,15 @@ body {
   padding: 10px;
   min-width: 30px;
   max-width: 999px; /* my sanity is withering */
-  transition: all ease-in-out 0.3s;
+  transition: all ease-in-out 0.1s;
   border-radius: 6px;
+  text-decoration: none;
 }
 
 .btn:hover {
   cursor: pointer;
   background-color: var(--tert-color);
+  color: var(--bg);
 }
 
 .input {

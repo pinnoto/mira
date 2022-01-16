@@ -28,34 +28,43 @@ VERSION = "1.0.0"
 ENV["MIRA_SECRET"] ||= Random::Secure.urlsafe_base64(256)
 ENV["MIRA_CONFIG"] ||= "/etc/mira/config.yml"
 # .rstrip strips the last /'s, if any, so it'd end in nothing.
-PORT = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).port.to_i
+PORT        = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).port.to_i
 WORKING_DIR = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).working_dir.rstrip('/')
-LIBRARY = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).library.rstrip('/')
-COVERS = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).covers.rstrip('/')
-DB_NAME = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_name.rstrip('/')
-DB_USER = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_user.rstrip('/')
+LIBRARY     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).library.rstrip('/')
+COVERS      = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).covers.rstrip('/')
+DB_NAME     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_name.rstrip('/')
+DB_USER     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_user.rstrip('/')
 DB_PASSWORD = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_password.rstrip('/')
 
 class Application < Grip::Application
   def routes
     pipeline :jwt_auth, [
-      TokenAuthorization.new
+      TokenAuthorization.new,
     ]
 
     scope "/api" do
       scope "/v#{VERSION[0]}" do
-        post "/register", AuthController, as: register
-        post "/login", AuthController, as: login
-        
+        scope "/auth" do
+          post "/register", AuthController, as: register
+          post "/login", AuthController, as: login
+        end
+
         pipe_through :jwt_auth
 
-        post "/post_session", SessionController, as: post_session
-        get "/get_session", SessionController, as: get_session
-        get "/fetch_library", LibraryController, as: fetch_library
-        get "/scan_library", LibraryController, as: scan_library
-        get "/get_user_info", UserController, as: get_user_info
-        #get "/file/:id", FileController, as: serve_file
-        #get "/cover/:id", FileController, as: serve_cover
+        scope "/library" do
+          get "/fetch", LibraryController, as: fetch_library
+          get "/scan", LibraryController, as: scan_library
+        end
+
+        scope "/user" do
+          get "/", UserController, as: get_user_info
+          
+        end
+        
+        #post "/post_session", SessionController, as: post_session
+        #get "/get_session", SessionController, as: get_session
+        get "/file/:id", FileController, as: serve_file
+        # get "/cover/:id", FileController, as: serve_cover
       end
     end
   end

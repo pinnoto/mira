@@ -1,10 +1,8 @@
 <template>
-  <div id="notFound">
-    <div class="main-container">
-      <div class="card-text">
-        <h1>404 Not Found</h1>
-        <h2>Please return <router-link to="/">Home</router-link></h2>
-      </div>
+  <div class="main-container">
+    <div class="card-text">
+      <h1>404 Not Found</h1>
+      <h2>Please return <router-link to="/">Home</router-link></h2>
     </div>
   </div>
 </template>

@@ -8,5 +8,5 @@ shard.lock
 .idea
 library
 .vs
-mira.db
 ui/vue.config.js
+mira

@@ -1,14 +1,16 @@
 <template>
   <div id="login" class="main-container">
-    <div class="card-alt">
-      <div class="card-text">
-        <p>Username&nbsp;<input v-model="register.username"></p>
-        <p>Password&nbsp;<input v-model="register.password"></p>
-        <p>Confirm Password&nbsp;<input v-model="register.confirmPassword"></p>
-        <p data-tooltip="Logout on refresh"><input type="checkbox" v-model="register.tempLogin">Temporary Login</p>
-        <button @click="doRegister">Register</button>&nbsp;<button @click="$router.push('/login')">Login page</button>
-      </div>
-      <br>
+    <h1 style="text-align: center;margin-bottom: -75px;margin-top:50px;">Register to Mira</h1>
+    <div class="card auth-card" style="height: 375px;">
+      <!--<p>Username<input v-model="login.username" class="input-box"></p>
+      <p>Password<input v-model="login.password" class="input-box"></p>
+      <p data-tooltip="Logout on refresh"><input type="checkbox" v-model="login.tempLogin" class="checkmark">Temporary Login</p>
+      <button @click="doLogin">Login</button>&nbsp;<button @click="$router.push('/register')">Don't have an account?</button>
+      <br><br>-->
+      <p>Username</p><input v-model="register.username" class="input">
+      <p>Password</p><input type="password" v-model="register.password" class="input">
+      <p>Confirm Password</p><input type="password" v-model="register.confirmPassword" class="input">
+      <a @click="doLogin" class="btn" >Sign Up</a> <a @click="$router.push('/login')" class="tip">Have an account?</a>
     </div>
   </div>
 </template>

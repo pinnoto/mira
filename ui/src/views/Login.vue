@@ -1,17 +1,16 @@
 <template>
   <div id="login" class="main-container">
-    <div class="card auth-card">
+    <h1 style="text-align: center;margin-bottom: -75px;margin-top:50px;">Login to Mira</h1>
+    <div class="card auth-card" style="height: 300px;">
       <!--<p>Username<input v-model="login.username" class="input-box"></p>
       <p>Password<input v-model="login.password" class="input-box"></p>
       <p data-tooltip="Logout on refresh"><input type="checkbox" v-model="login.tempLogin" class="checkmark">Temporary Login</p>
       <button @click="doLogin">Login</button>&nbsp;<button @click="$router.push('/register')">Don't have an account?</button>
       <br><br>-->
-      <h1>Login to Mira</h1>
       <p>Username</p><input v-model="login.username" class="input">
       <p>Password</p><input type="password" v-model="login.password" class="input">
       <a @click="doLogin" class="btn" >Sign In</a> <a @click="$router.push('/register')" class="tip">Don't have an account?</a>
     </div>
-    <div class="card"></div>
   </div>
 </template>
 

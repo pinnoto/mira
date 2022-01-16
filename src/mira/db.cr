@@ -13,27 +13,29 @@ class User < Granite::Base
   column last_login : Time
 end
 
-#class Session < Granite::Base
+# class Session < Granite::Base
 #  connection postgres
 #
 #  column id : String
 #  column page : Int32?
 #  column notes : Array(String)?
 #  column bookmarks : Array(String)?
-#end
+# end
 
-#class Book < Granite::Base
-#  connection postgres
-#  
-#  column id : String
-#  column title : String
-#  column authors : Array(String)
-#  column date : String?
-#  column date_added : Time
-#  column cover : String?
-#  column directory : String
-#end
+class Book < Granite::Base
+  connection postgres
 
-User.migrator.drop_and_create
-#Session.migrator.drop_and_create
-#Book.migrator.drop_and_create
+  column id : String?, primary: true, auto: false
+  column title : String?
+  column authors : Array(String)?
+  column date : String?
+  column date_added : Time?
+  column cover : String?
+  column cover_directory : String?
+  column directory : String?
+  column success : Bool?
+end
+
+# User.migrator.drop_and_create
+# Session.migrator.drop_and_create
+Book.migrator.drop_and_create

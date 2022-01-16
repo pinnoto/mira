@@ -26,7 +26,7 @@
       <div v-if="loading">
         <div class="card-text">
           <h1>Loading...</h1>
-          <h2>Please wait.</h2>
+          <h2>Please wait!</h2>
         </div>
       </div>
       <div v-if="!books.items.length && !loading">
@@ -64,7 +64,7 @@ export default {
   computed: {
     onlyParsed: function() {
       return this.books.items.filter(function(u) {
-        return !u.failedParse
+        return u.success
       })
     }
   },

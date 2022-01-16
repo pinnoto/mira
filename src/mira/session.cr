@@ -1,5 +1,4 @@
 class SessionController < Grip::Controllers::Http
-  
   def post_session(context : Context) : Context
     params = context.fetch_json_params
 
@@ -20,8 +19,7 @@ class SessionController < Grip::Controllers::Http
 
     context
       .put_status(200)
-  #    .json({page: page, notes: [notes], bookmars: [bookmarks]})
+      #    .json({page: page, notes: [notes], bookmars: [bookmarks]})
       .halt
   end
-
 end
