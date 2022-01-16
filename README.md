@@ -11,7 +11,6 @@ NOTE: Mira is currently in development, but is close to being done!
 3. Set the `MIRA_CONFIG` environment variable: `export MIRA_CONFIG=/etc/mira/config.yml` and configure it
 ```yml
 port: 11880
-working_dir: /home/user/mira
 library: /home/user/library
 covers: /home/user/covers
 open_registrations: true
