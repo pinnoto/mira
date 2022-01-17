@@ -38,4 +38,4 @@ end
 
 #User.migrator.drop_and_create
 #Session.migrator.drop_and_create
-#Book.migrator.drop_and_create
+Book.migrator.drop_and_create

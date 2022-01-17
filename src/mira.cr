@@ -25,8 +25,8 @@ class YamlConfig
 end
 
 VERSION = "1.0.0"
-ENV["MIRA_SECRET"] ||= Random::Secure.urlsafe_base64(256)
 ENV["MIRA_CONFIG"] ||= "/etc/mira/config.yml"
+ENV["MIRA_SECRET"] ||= Random::Secure.urlsafe_base64(256)
 # .rstrip strips the last /'s, if any, so it'd end in nothing.
 PORT        = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).port.to_i
 LIBRARY     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).library.rstrip('/')
@@ -34,7 +34,7 @@ COVERS      = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).covers.rstrip(
 DB_NAME     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_name.rstrip('/')
 DB_USER     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_user.rstrip('/')
 DB_PASSWORD = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_password.rstrip('/')
-DB_HOST = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_host.rstrip('/')
+DB_HOST     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_host.rstrip('/')
 
 class Application < Grip::Application
   def routes
@@ -63,7 +63,7 @@ class Application < Grip::Application
         #post "/post_session", SessionController, as: post_session
         #get "/get_session", SessionController, as: get_session
         get "/file/:id", FileController, as: serve_file
-        # get "/cover/:id", FileController, as: serve_cover
+        get "/cover/:id", FileController, as: serve_cover
       end
     end
   end
@@ -87,6 +87,7 @@ when DB_HOST
   puts "#{"ERROR ".colorize(:red)}Database hostname not set in #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
 else
   puts "#{"INFO  ".colorize(:dark_gray)}Using config from #{ENV["MIRA_CONFIG"].to_s.colorize(:yellow)}."
+  puts "#{"INFO  ".colorize(:dark_gray)}Storing logs at #{"/var/log/mira.log".colorize(:yellow)}."
   app = Application.new
   app.run
 end
