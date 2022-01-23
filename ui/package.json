@@ -12,7 +12,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "epub": "^1.2.1",
-    "epubjs": "^0.3.88",
+    "epubjs": "^0.3.89",
     "glob-parent": "5.1.2",
     "moment": "^2.29.1",
     "patch-package": "^6.4.7",
