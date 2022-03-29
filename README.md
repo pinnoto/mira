@@ -4,6 +4,7 @@
 EPUB server and reader written in Crystal
 
 NOTE: Mira is currently in development, but is close to being done!
+Contributions are very appreciated!
 
 ## Installation (Backend)
 1. Clone the repositry and cd into it `git clone https://github.com/pinnoto/mira && cd mira`
