@@ -31,10 +31,10 @@ ENV["MIRA_SECRET"] ||= Random::Secure.urlsafe_base64(256)
 PORT        = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).port.to_i
 LIBRARY     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).library.rstrip('/')
 COVERS      = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).covers.rstrip('/')
-DB_NAME     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"]))
-DB_USER     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"]))
-DB_PASSWORD = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"]))
-DB_HOST     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"]))
+DB_NAME     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_name
+DB_USER     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_user
+DB_PASSWORD = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_password
+DB_HOST     = YamlConfig.from_yaml(File.read(ENV["MIRA_CONFIG"])).db_host 
 
 class Application < Grip::Application
   def routes
