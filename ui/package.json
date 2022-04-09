@@ -14,7 +14,7 @@
     "epub": "^1.2.1",
     "epubjs": "^0.3.89",
     "glob-parent": "5.1.2",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "patch-package": "^6.4.7",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
